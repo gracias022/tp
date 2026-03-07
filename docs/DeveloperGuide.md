@@ -421,9 +421,9 @@ Use case ends.
 
 **Extensions:**
 
-- 2a. BZNUS detects no matching customers for the entered keyword.
+- 1a. BZNUS detects no matching customers for the entered keyword.
 
-    - 2a1. BZNUS displays a message indicating no results were found.
+    - 1a1. BZNUS displays a message indicating no results were found.
 
       Use case ends.
 
