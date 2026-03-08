@@ -277,7 +277,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * is a home-based food and beverage (F&B) business owner
-* has a need to manage a significant number of customer contacts, dietary preferences, and food orders
+* has a need to manage a significant number of customer contacts from multiple messaging platforms, complex dietary requirements, and food orders with varying deadlines
 * prefers desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
