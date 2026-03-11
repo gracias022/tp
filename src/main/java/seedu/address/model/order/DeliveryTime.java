@@ -11,7 +11,7 @@ import java.time.format.DateTimeParseException;
  * Represents a delivery date and time for an Order.
  * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)} and {@link #isInFuture(String)}
  */
-public class Datetime {
+public class DeliveryTime {
     public static final String MESSAGE_CONSTRAINTS =
             "Usage: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359";
 
@@ -31,7 +31,7 @@ public class Datetime {
      *
      * @param datetime A valid datetime.
      */
-    public Datetime(String datetime) {
+    public DeliveryTime(String datetime) {
         requireNonNull(datetime);
         checkArgument(isValidFormat(datetime), MESSAGE_CONSTRAINTS);
         checkArgument(isInFuture(datetime), MESSAGE_CONSTRAINTS_FUTURE);
@@ -68,10 +68,10 @@ public class Datetime {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Datetime)) {
+        if (!(other instanceof DeliveryTime)) {
             return false;
         }
-        Datetime otherDt = (Datetime) other;
+        DeliveryTime otherDt = (DeliveryTime) other;
         return value.equals(otherDt.value);
     }
 
