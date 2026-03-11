@@ -21,11 +21,16 @@ public class Datetime {
     public static final String VALIDATION_REGEX =
             "\\d{4}-\\d{2}-\\d{2} \\d{4}";
 
-    public final String value;
-
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
+    public final String value;
+
+    /**
+     * Constructs a {@code Datetime}.
+     *
+     * @param datetime A valid datetime.
+     */
     public Datetime(String datetime) {
         requireNonNull(datetime);
         checkArgument(isValidFormat(datetime), MESSAGE_CONSTRAINTS);
