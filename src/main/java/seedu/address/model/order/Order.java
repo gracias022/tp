@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Address;
 
@@ -13,6 +14,7 @@ import seedu.address.model.person.Address;
  */
 public class Order {
     // Data fields
+    private final Index customerIndex;
     private final Item item;
     private final Quantity quantity;
     private final DeliveryTime deliveryTime;
@@ -22,13 +24,18 @@ public class Order {
     /**
      * Every field must be present and not null.
      */
-    public Order(Item item, Quantity quantity, DeliveryTime deliveryTime, Address address, Status status) {
+    public Order(Index index, Item item, Quantity quantity, DeliveryTime deliveryTime, Address address, Status status) {
         requireAllNonNull(item, quantity, deliveryTime, address, status);
+        this.customerIndex = index;
         this.item = item;
         this.quantity = quantity;
         this.deliveryTime = deliveryTime;
         this.address = address;
         this.status = status;
+    }
+
+    public Index getCustomerIndex() {
+        return customerIndex;
     }
 
     public Item getItem() {
