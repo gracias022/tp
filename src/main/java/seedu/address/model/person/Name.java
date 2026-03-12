@@ -10,13 +10,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain alphanumeric characters, spaces and apostrophes, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' ]*";
 
     public final String fullName;
 
@@ -56,7 +56,21 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return fullName.equals(otherName.fullName);
+        String normalizedThis = normalizeFullName(fullName);
+        String normalizedOther = normalizeFullName(otherName.fullName);
+        return normalizedThis.equals(normalizedOther);
+    }
+
+    /**
+     * Normalizes a full name for consistent comparison and storage.
+     * Converts the name to lowercase and collapses consecutive whitespace
+     * characters into a single space.
+     *
+     * @param fullName The name to normalize.
+     * @return The normalized name in lowercase with single spaces.
+     */
+    public String normalizeFullName(String fullName) {
+        return fullName.toLowerCase().replaceAll("\\s+", " ");
     }
 
     @Override
