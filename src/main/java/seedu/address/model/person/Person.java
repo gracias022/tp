@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -20,6 +22,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private OrderList orderList;
 
     // Data fields
     private final Address address;
@@ -37,6 +40,10 @@ public class Person {
         this.tags.addAll(tags);
     }
 
+    public void addOrder(Order order) {
+        this.orderList.add(order);
+    }
+
     public Name getName() {
         return name;
     }
@@ -51,6 +58,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public OrderList getOrders() {
+        return orderList;
     }
 
     /**
