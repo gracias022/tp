@@ -7,7 +7,7 @@ import seedu.address.commons.util.ToStringBuilder;
 public class OrderContainsKeywordsPredicate implements Predicate<Order> {
 
     public enum SearchType {
-        ITEM,  //-i
+        ITEM, //-i
         ADDRESS, //-a
         CUSTOMER; //-c
     }
