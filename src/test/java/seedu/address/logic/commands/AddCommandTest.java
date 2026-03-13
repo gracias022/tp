@@ -9,10 +9,9 @@ import java.util.function.Predicate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import javafx.collections.ObservableList;
-
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -21,10 +20,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.order.Order;
-import static seedu.address.testutil.Assert.assertThrows;
 import seedu.address.model.person.Person;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.Assert.assertThrows;
 import seedu.address.testutil.PersonBuilder;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 public class AddCommandTest {
 
