@@ -111,10 +111,6 @@ public class AddressBookTest {
             return persons;
         }
 
-        @Override
-        public ObservableList<Order> getOrderList() {
-            return orders;
-        }
     }
 
 
