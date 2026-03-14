@@ -4,6 +4,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
@@ -143,5 +144,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return persons.hashCode();
+    }
+
+    void removeOrdersForCustomer(Index customerIndex) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
