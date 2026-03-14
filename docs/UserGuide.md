@@ -33,7 +33,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `add n/John Doe p/98765432 a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the customer database.
 
-   * `order 1  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list. 
+   * `order 1  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -118,21 +118,18 @@ Examples:
 
 ### Locating customers by name: `find`
 
-Finds customers whose names contain any of the given keywords.
+Finds customers whose any of the field contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Customers matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* All fields are searched.
+* Only partial words will be matched e.g. `Han` will match `Hans`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find 99272758` returns `Bernice Yu` as she had the number 99272758<br>
+  ![result for 'find 99272758'](images/findBernice.png)
 
 ### Deleting a customer : `delete`
 
@@ -161,7 +158,7 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STAT
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
 * `DATE` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
-* If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `DELIVERED`, `CANCELLED`.
+* If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
 
 **Examples:**
 * `order 1 i/Pizza q/3 at/2026-04-02 1200`
@@ -184,6 +181,20 @@ Format: `delete-o CUST_INDEX o/ORDER_INDEX`
 * `delete-o 1 o/2` - Deletes the 2nd order from the 1st customer in the current list
 * `delete-o 3 o/1` - Deletes the 1st order from the 3rd customer in the current list
 
+
+### Search for Orders based on certain keywords: `find-o`
+Search for different orders with 3 category options: item name, delivery address, customer id
+
+Format `find-o Category-Type/Category-Keywords`
+
+* Find the orders given the `Category-Keywords` from the `Category-Type`.
+* The category keywords refer to the keyword used to look for orders.
+* The category type refers to one of the 3 category options shown above.
+* The category type **must be one of i/a/c**, which are respectively item, address, customer.
+
+**Examples:**
+* `find-o i/pizza` - Look for orders with item keyword "pizza"
+* `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 
 ### Clearing all entries : `clear`
 
@@ -237,7 +248,7 @@ _Details coming soon ..._
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add Contact**    | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/regular`
-**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
+**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
 **Clear**  | `clear`
 **Delete Contact** | `delete INDEX` <br> e.g., `delete 3`
 **Delete Order** | `delete-o CUST_INDEX o/ORDER_INDEX` <br> e.g., `delete-o 1 o/2`
