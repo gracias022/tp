@@ -108,9 +108,6 @@ public interface Model {
      */
     void deleteOrdersForCustomer(Index customerIndex);
 
-    /** Returns an unmodifiable view of the order list */
-    ObservableList<Order> getOrderList();
-
     /**
      * Gets all orders by with a specific status across all customers
      */

@@ -172,19 +172,18 @@ public class AddCommandTest {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
+        @Override
         public void addOrder(Order order) {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
         public void deleteOrder(Order order) {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
         public void deleteOrdersForCustomer(Index customerIndex) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        public ObservableList<Order> getOrderList() {
             throw new AssertionError("This method should not be called.");
         }
 

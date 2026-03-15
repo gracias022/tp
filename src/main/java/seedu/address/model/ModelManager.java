@@ -27,7 +27,6 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Order> filteredOrders;
-    private final ObservableList<Order> orders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,7 +40,6 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredOrders = new FilteredList<>(this.addressBook.getOrderList());
-        orders = this.addressBook.getOrderList();
     }
 
     public ModelManager() {
@@ -167,15 +165,6 @@ public class ModelManager implements Model {
     }
 
     //=========== Order List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-    @Override
-    public ObservableList<Order> getOrderList() {
-        return orders;
-    }
 
     @Override
     public void updateFilteredOrderList(Predicate<Order> predicate) {
