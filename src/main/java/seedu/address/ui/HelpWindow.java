@@ -10,6 +10,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -60,35 +61,55 @@ public class HelpWindow extends UiPart<Stage> {
 
         helpContentBox.getChildren().addAll(heading, headingSeparator);
 
-        addCommandBlock("add", "Add a new contact",
-                "add n/NAME p/PHONE e/EMAIL a/ADDRESS",
-                "add n/John Doe p/98765432 e/johnd@example.com a/123, Main St");
-
-        addCommandBlock("delete", "Remove a contact by index",
-                "delete INDEX",
-                "delete 3");
-
-        addCommandBlock("edit", "Edit an existing contact",
-                "edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]",
-                "edit 3 n/Jane Smith p/98765433");
-
-        addCommandBlock("find", "Search contacts by keyword",
-                "find KEYWORD [MORE_KEYWORDS]",
-                "find John");
-
-        addCommandBlock("list", "List all contacts",
-                "list",
-                "list");
-
-        addCommandBlock("clear", "Clear all entries",
-                "clear",
-                "clear");
-
-        addCommandBlock("help", "Show this help window",
+        addCommandBlock("help", "Shows a message explaining how to access the help page.",
                 "help",
                 "help");
 
-        addCommandBlock("exit", "Exit the application",
+        addCommandBlock("add", "Adds a customer to the customer database.",
+                "add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​",
+                "add n/John Doe p/98765432 a/John Street, Blk 123, #01-01");
+
+        addCommandBlock("list", "Shows a list of all customers in the address book.",
+                "list",
+                "list");
+
+        addCommandBlock("edit", "Edits an existing customer in the address book.",
+                "edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​",
+                "edit 1 p/91234567 a/John Street, Blk 123, #02-02");
+
+        addCommandBlock("find", "Finds customers whose any of the field contain any of the given keywords.",
+                "find KEYWORD [MORE_KEYWORDS]",
+                "find John");
+
+        addCommandBlock("delete", "Deletes the specified customer from the customer database.",
+                "delete INDEX",
+                "delete 3");
+        
+        Separator orderSeparator = new Separator();
+        orderSeparator.getStyleClass().add("help-separator");
+        helpContentBox.getChildren().addAll(orderSeparator);
+
+        addCommandBlock("order", "Adds a new order to a specific customer.",
+                "order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STATUS]",
+                "order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01");
+
+        addCommandBlock("delete-o", "Removes a specific order from a customer’s order history.",
+                "delete-o CUST_INDEX o/ORDER_INDEX",
+                "delete-o 1 o/2");
+
+        addCommandBlock("find-o", "Search for different orders with 3 category options: item name, delivery address, customer id",
+                "find-o Category-Type/Category-Keywords",
+                "find-o i/pizza");
+
+        addCommandBlock("view-o", "View a list of orders by their status: (PREPARING/READY/DELIVERED/CANCELLED/ALL)",
+                "view-o STATUS",
+                "view-o preparing");
+
+        addCommandBlock("clear", "Clears all customers and their orders from BZNUS.",
+                "clear",
+                "clear");
+
+        addCommandBlock("exit", "Exits the program.",
                 "exit",
                 "exit");
 
@@ -112,6 +133,9 @@ public class HelpWindow extends UiPart<Stage> {
         cmdLabel.getStyleClass().add("help-command");
         Label descLabel = new Label(description);
         descLabel.getStyleClass().add("help-description");
+        descLabel.setWrapText(true);
+        descLabel.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(descLabel, Priority.ALWAYS);
         commandRow.getChildren().addAll(cmdLabel, descLabel);
 
         Label formatLabel = new Label("Format:  " + format);
