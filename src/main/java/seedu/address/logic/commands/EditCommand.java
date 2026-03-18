@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -24,7 +24,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
 import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -45,7 +45,7 @@ public class EditCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_FACEBOOK + "FACEBOOK] "
             + "[" + PREFIX_INSTAGRAM + "INSTAGRAM] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_REMARK + "REMARK] "
@@ -103,13 +103,13 @@ public class EditCommand extends Command {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = getUpdatedField(editPersonDescriptor.getPhone(), personToEdit.getPhone());
-        Email updatedEmail = getUpdatedField(editPersonDescriptor.getEmail(), personToEdit.getEmail());
+        Facebook updatedFacebook = getUpdatedField(editPersonDescriptor.getFacebook(), personToEdit.getFacebook());
         Instagram updatedInstagram = getUpdatedField(editPersonDescriptor.getInstagram(), personToEdit.getInstagram());
         Address updatedAddress = getUpdatedField(editPersonDescriptor.getAddress(), personToEdit.getAddress());
         Remark updatedRemark = getUpdatedField(editPersonDescriptor.getRemark(), personToEdit.getRemark());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedInstagram, updatedAddress,
+        return new Person(updatedName, updatedPhone, updatedFacebook, updatedInstagram, updatedAddress,
                 updatedRemark, updatedTags);
     }
 
@@ -148,7 +148,7 @@ public class EditCommand extends Command {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private Facebook facebook;
         private Instagram instagram;
         private Address address;
         private Remark remark;
@@ -163,7 +163,7 @@ public class EditCommand extends Command {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
-            setEmail(toCopy.email);
+            setFacebook(toCopy.facebook);
             setInstagram(toCopy.instagram);
             setAddress(toCopy.address);
             setRemark(toCopy.remark);
@@ -174,7 +174,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, instagram, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, facebook, instagram, address, tags);
         }
 
         public void setName(Name name) {
@@ -193,12 +193,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setFacebook(Facebook facebook) {
+            this.facebook = facebook;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Facebook> getFacebook() {
+            return Optional.ofNullable(facebook);
         }
 
         public void setInstagram(Instagram instagram) {
@@ -256,7 +256,7 @@ public class EditCommand extends Command {
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
+                    && Objects.equals(facebook, otherEditPersonDescriptor.facebook)
                     && Objects.equals(instagram, otherEditPersonDescriptor.instagram)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(remark, otherEditPersonDescriptor.remark)
@@ -268,7 +268,7 @@ public class EditCommand extends Command {
             return new ToStringBuilder(this)
                     .add("name", name)
                     .add("phone", phone)
-                    .add("email", email)
+                    .add("facebook", facebook)
                     .add("instagram", instagram)
                     .add("address", address)
                     .add("remark", remark)
