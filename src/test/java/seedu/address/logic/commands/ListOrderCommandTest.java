@@ -36,7 +36,8 @@ public class ListOrderCommandTest {
         showOrderAtIndex(model, INDEX_FIRST_ORDER);
         Model expectedModelAfterCommand = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        assertCommandSuccess(new ListOrderCommand(), model, ListOrderCommand.MESSAGE_SUCCESS, expectedModelAfterCommand);
+        assertCommandSuccess(new ListOrderCommand(), model,
+                ListOrderCommand.MESSAGE_SUCCESS, expectedModelAfterCommand);
     }
 }
 

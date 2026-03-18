@@ -7,8 +7,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderList;
-import seedu.address.model.order.Status;
 import seedu.address.model.person.Person;
 
 /**
