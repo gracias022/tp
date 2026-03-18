@@ -3,8 +3,10 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.FindCommand;
@@ -29,9 +31,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_TAG);
+                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_EMAIL,
+                PREFIX_TAG, PREFIX_INSTAGRAM, PREFIX_REMARK);
         boolean hasPrefix = argMultimap.containsPrefix(PREFIX_NAME, PREFIX_PHONE,
-                PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_TAG);
+                PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_TAG, PREFIX_INSTAGRAM, PREFIX_REMARK);
         if (!hasPrefix) {
             return new FindCommand(new PersonContainsKeywordsPredicate(trimmedArgs));
         }
@@ -64,6 +67,18 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new PersonContainsKeywordsPredicate(
                     getNonEmptyValue(argMultimap, PREFIX_TAG),
                     PersonContainsKeywordsPredicate.SearchType.TAG));
+        }
+
+        if (argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()) {
+            return new FindCommand(new PersonContainsKeywordsPredicate(
+                    getNonEmptyValue(argMultimap, PREFIX_INSTAGRAM),
+                    PersonContainsKeywordsPredicate.SearchType.INSTAGRAM));
+        }
+
+        if (argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            return new FindCommand(new PersonContainsKeywordsPredicate(
+                    getNonEmptyValue(argMultimap, PREFIX_REMARK),
+                    PersonContainsKeywordsPredicate.SearchType.REMARK));
         }
         throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
