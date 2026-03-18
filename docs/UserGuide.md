@@ -177,8 +177,8 @@ Format: `delete-o ORDER_INDEX`
 * The index **must be positive integers** 1, 2, 3, …​
 
 **Examples:**
-* `view-o ALL` followed by `delete 3` deletes the 3rd order in the results of the `view-o` command.
-* `find-o i/pizza` followed by `delete 1` deletes the 1st order in the results of the `find-o` command.
+* `view-o` followed by `delete-o 3` deletes the 3rd order in the results of the `view-o` command.
+* `find-o i/pizza` followed by `delete-o 1` deletes the 1st order in the results of the `find-o` command.
 
 ### Search for Orders based on certain keywords: `find-o`
 Search for different orders with 3 category options: item name, delivery address, customer id
