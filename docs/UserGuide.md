@@ -137,6 +137,7 @@ Format: `find PREFIX/KEYWORD`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * Limits the search to a single specific field.
+* Only one prefix group are allowed.
 
 Available Prefixes:
 * n/ (Name)

@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -56,6 +55,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     private boolean testSpecific(Person person) {
+        if (searchPhrase.isEmpty()) {
+            return false;
+        }
         switch (searchType) {
         case NAME:
             return person.getName().toString().toLowerCase().contains(searchPhrase.toLowerCase());
