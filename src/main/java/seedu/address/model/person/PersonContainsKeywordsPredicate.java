@@ -62,18 +62,28 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         case NAME:
             return person.getName().toString().toLowerCase().contains(searchPhrase.toLowerCase());
         case ADDRESS:
-            return person.getAddress().toString().toLowerCase().contains(searchPhrase.toLowerCase());
+            return person.getAddress()
+                    .map(address -> address.toString().toLowerCase().contains(searchPhrase))
+                    .orElse(false);
         case PHONE:
-            return person.getPhone().toString().contains(searchPhrase.toLowerCase());
+            return person.getPhone()
+                .map(phone -> phone.toString().toLowerCase().contains(searchPhrase))
+                .orElse(false);
         case EMAIL:
-            return person.getEmail().toString().toLowerCase().contains(searchPhrase.toLowerCase());
+            return person.getEmail()
+                    .map(email -> email.toString().toLowerCase().contains(searchPhrase))
+                    .orElse(false);
         case TAG:
             return person.getTags().stream()
                     .anyMatch(tag -> tag.toString().toLowerCase().contains(searchPhrase.toLowerCase()));
         case INSTAGRAM:
-            return person.getInstagram().toString().toLowerCase().contains(searchPhrase.toLowerCase());
+            return person.getInstagram()
+                    .map(ig -> ig.toString().toLowerCase().contains(searchPhrase))
+                    .orElse(false);
         case REMARK:
-            return person.getRemark().toString().toLowerCase().contains(searchPhrase.toLowerCase());
+            return person.getRemark()
+                    .map(remark -> remark.toString().toLowerCase().contains(searchPhrase))
+                    .orElse(false);
         default:
             return false;
         }
