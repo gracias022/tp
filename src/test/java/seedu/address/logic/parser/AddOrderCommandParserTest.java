@@ -44,7 +44,7 @@ public class AddOrderCommandParserTest {
         Person customer = new PersonBuilder().withName("Alice").build();
         UUID customerId = customer.getId();
 
-                Order expectedOrder = new OrderBuilder()
+        Order expectedOrder = new OrderBuilder()
                 .withCustomerId(customerId)
                 .withItem("Pizza")
                 .withQuantity("3")

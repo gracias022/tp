@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.DeliveryTime;
 import seedu.address.model.order.Item;
@@ -76,7 +75,7 @@ public class JsonAdaptedOrderTest {
         Person customer = new PersonBuilder().withName("Alice").build();
         String validCustomerId = customer.getId().toString();
 
-                JsonAdaptedOrder order = new JsonAdaptedOrder(
+        JsonAdaptedOrder order = new JsonAdaptedOrder(
                 INVALID_ITEM, VALID_QUANTITY, VALID_DELIVERY_TIME, VALID_ADDRESS, VALID_STATUS, validCustomerId);
         assertThrows(IllegalValueException.class, () -> order.toModelType(validPersons));
     }
