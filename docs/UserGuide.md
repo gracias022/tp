@@ -82,15 +82,15 @@ Format: `help`
 
 Adds a customer to the customer database.
 
-Format: `add n/NAME [p/PHONE_NUMBER] [ig/IG] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
+Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 <box type="tip" seamless>
 
 **Tip:** A customer can have any number of tags (including 0)
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 a/John Street, Blk 123, #01-01`
-* `add n/Betsy Crowe t/friend fb/@betsy a/Blk 456, Bedok North`
+* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01`
+* `add n/Betsy Crowe t/friend fb/betsy a/Blk 456, Bedok North`
 * `add n/Tech Corp SG a/Tech Tower, Level 12`
 
 ### Listing all customers : `list`
@@ -103,7 +103,7 @@ Format: `list`
 
 Edits an existing customer in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [ig/IG] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -140,15 +140,17 @@ Format: `find PREFIX/KEYWORD`
 * Only one prefix group are allowed.
 
 Available Prefixes:
-* n/ (Name)
-* p/ (Phone)
-* e/ (Email)
-* a/ (Address)
-* t/ (Tag)
+* n/NAME
+* p/PHONE
+* fb/FACEBOOK
+* ig/INSTAGRAM
+* a/ADDRESS
+* r/REMARK
+* t/TAG
 
 Example:
-* find n/Alice returns all persons whose names contain "Alice"
-* find t/colleagues returns all persons whose tags contain "colleagues".
+* find n/Alice returns all persons whose name contains "Alice"
+* find t/regular returns all persons whose tags contain "regular".
 
 ### Deleting a customer : `delete`
 
@@ -261,7 +263,7 @@ BZNUS data are saved in the hard disk automatically after any command that chang
 
 ### Editing the data file
 
-BZNUS data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
@@ -278,8 +280,12 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**Q**: How do I transfer my data to another computer?<br>
+**A**:
+1. Install BZNUS on the new computer, run it once, then close the app.
+2. On your old computer, open the folder containing `bznus.jar`, then go to `data/addressbook.json`.
+3. Copy `addressbook.json` to the same location on the new computer (`[JAR file location]/data/`) and replace the existing data file.
+4. Start BZNUS again. Your customers and orders should appear.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -294,14 +300,14 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Contact**    | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/regular`
+**Add Contact**    | `add n/NAME [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 fb/james.Ho ig/james_Ho a/123, Clementi Rd, 1234665 r/extra spicy, no onion t/friend t/regular`
 **Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
 **Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
 **View Order** | 
 **Clear**  | `clear`
 **Delete Contact** | `delete INDEX` <br> e.g., `delete 3`
 **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
-**Edit Contact**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee ig/jamesLee`
+**Edit Contact**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee ig/jamesLee`
 **Exit**   | `exit`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`

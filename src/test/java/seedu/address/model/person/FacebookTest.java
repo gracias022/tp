@@ -35,7 +35,7 @@ public class FacebookTest {
 
     @Test
     public void constructor_validFacebookWithWhitespace_trimsInput() {
-        Instagram facebookWithoutAtPrefix = new Instagram("  john.smith55  ");
+        Facebook facebookWithoutAtPrefix = new Facebook("  john.smith55  ");
         assertEquals("john.smith55", facebookWithoutAtPrefix.toString());
 
         Facebook facebookWithAtPrefix = new Facebook("  @john.smith55  ");
