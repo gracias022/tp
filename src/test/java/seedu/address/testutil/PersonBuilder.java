@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
 import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -21,13 +21,13 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "amy@gmail.com";
+    public static final String DEFAULT_FACEBOOK = "amy.bee55";
     public static final String DEFAULT_INSTAGRAM = "amy_bee";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
     private Phone phone;
-    private Email email;
+    private Facebook facebook;
     private Instagram instagram;
     private Address address;
     private Remark remark;
@@ -40,7 +40,7 @@ public class PersonBuilder {
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
+        facebook = new Facebook(DEFAULT_FACEBOOK);
         instagram = new Instagram(DEFAULT_INSTAGRAM);
         address = new Address(DEFAULT_ADDRESS);
         remark = null;
@@ -54,7 +54,7 @@ public class PersonBuilder {
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
         phone = personToCopy.getPhone().orElse(null);
-        email = personToCopy.getEmail().orElse(null);
+        facebook = personToCopy.getFacebook().orElse(null);
         instagram = personToCopy.getInstagram().orElse(null);
         address = personToCopy.getAddress().orElse(null);
         remark = personToCopy.getRemark().orElse(null);
@@ -111,18 +111,18 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Facebook} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
+    public PersonBuilder withFacebook(String facebook) {
+        this.facebook = new Facebook(facebook);
         return this;
     }
 
     /**
-     * Removes the {@code Email} of the {@code Person} that we are building.
+     * Removes the {@code Facebook} of the {@code Person} that we are building.
      */
-    public PersonBuilder withoutEmail() {
-        this.email = null;
+    public PersonBuilder withoutFacebook() {
+        this.facebook = null;
         return this;
     }
 
@@ -159,7 +159,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, instagram, address, remark, tags);
+        return new Person(name, phone, facebook, instagram, address, remark, tags);
     }
 
 }

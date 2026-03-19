@@ -12,7 +12,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
      * Specifies the type of search to perform.
      */
     public enum SearchType {
-        NAME, ADDRESS, PHONE, EMAIL, TAG, INSTAGRAM, REMARK
+        NAME, ADDRESS, PHONE, FACEBOOK, TAG, INSTAGRAM, REMARK
     }
     private final String searchPhrase;
     private final boolean isGeneralSearch;
@@ -48,8 +48,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         String lowerPhrase = searchPhrase.toLowerCase();
         return person.getName().fullName.toLowerCase().contains(lowerPhrase)
                 || person.getPhone().map(p -> p.value.toLowerCase().contains(lowerPhrase)).orElse(false)
-                || person.getEmail().map(e -> e.value.toLowerCase().contains(lowerPhrase)).orElse(false)
+                || person.getFacebook().map(fb -> fb.value.toLowerCase().contains(lowerPhrase)).orElse(false)
+                || person.getInstagram().map(ig -> ig.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getAddress().map(a -> a.value.toLowerCase().contains(lowerPhrase)).orElse(false)
+                || person.getRemark().map(r -> r.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getTags().stream()
                 .anyMatch(tag -> tag.tagName.toLowerCase().contains(lowerPhrase));
     }
@@ -70,9 +72,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
             return person.getPhone()
                 .map(phone -> phone.toString().toLowerCase().contains(lowerPhrase))
                 .orElse(false);
-        case EMAIL:
-            return person.getEmail()
-                    .map(email -> email.toString().toLowerCase().contains(lowerPhrase))
+        case FACEBOOK:
+            return person.getFacebook()
+                    .map(facebook -> facebook.toString().toLowerCase().contains(lowerPhrase))
                     .orElse(false);
         case TAG:
             return person.getTags().stream()

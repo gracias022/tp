@@ -54,9 +54,9 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_emailContainsPhrase_returnsTrue() {
-        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate("alice@email");
-        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@email.com").build()));
+    public void test_facebookContainsPhrase_returnsTrue() {
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate("alice.pau");
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("alice.pauline").build()));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PersonContainsKeywordsPredicateTest {
         // Non-matching phrase
         predicate = new PersonContainsKeywordsPredicate("Zebra");
         assertFalse(predicate.test(new PersonBuilder().withName("Alex Yeoh").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+                .withFacebook("alice.pauline").withAddress("Main Street").build()));
     }
 
     @Test

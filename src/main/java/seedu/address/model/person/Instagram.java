@@ -24,9 +24,9 @@ public class Instagram {
      */
     public Instagram(String instagram) {
         requireNonNull(instagram);
-        checkArgument(isValidInstagram(instagram), MESSAGE_CONSTRAINTS);
-        value = instagram.startsWith("@")
-                ? instagram.substring(1) : instagram; // strip leading @ for storage
+        String trimmed = instagram.trim();
+        checkArgument(isValidInstagram(trimmed), MESSAGE_CONSTRAINTS);
+        value = trimmed.startsWith("@") ? trimmed.substring(1) : trimmed; // trim leading @ for storage
     }
 
     /**

@@ -21,9 +21,18 @@ public class InstagramTest {
     }
 
     @Test
+    public void constructor_validInstagramWithWhitespace_trimsInput() {
+        Instagram instagramWithoutAtPrefix = new Instagram("  john.smith55  ");
+        assertEquals("john.smith55", instagramWithoutAtPrefix.toString());
+
+        Instagram instagramWithAtPrefix = new Instagram("  @john.smith55  ");
+        assertEquals("john.smith55", instagramWithAtPrefix.toString());
+    }
+
+
+    @Test
     public void constructor_validInstagramWithAtPrefix_stripsAtForStorage() {
         Instagram instagram = new Instagram("@sarah_eats");
-
         assertEquals("sarah_eats", instagram.toString());
     }
 

@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -38,8 +38,8 @@ public class PersonUtil {
                 sb.append(PREFIX_PHONE + p.value + " ")
         );
 
-        person.getEmail().ifPresent(e ->
-                sb.append(PREFIX_EMAIL + e.value + " ")
+        person.getFacebook().ifPresent(fb ->
+                sb.append(PREFIX_FACEBOOK + fb.value + " ")
         );
 
         person.getInstagram().ifPresent(ig ->
@@ -67,7 +67,8 @@ public class PersonUtil {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
-        descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
+        descriptor.getFacebook()
+                .ifPresent(facebook -> sb.append(PREFIX_FACEBOOK).append(facebook.value).append(" "));
         descriptor.getInstagram()
                 .ifPresent(instagram -> sb.append(PREFIX_INSTAGRAM).append(instagram.value).append(" "));
         descriptor.getAddress()
