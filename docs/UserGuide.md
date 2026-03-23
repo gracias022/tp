@@ -20,7 +20,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -66,7 +66,8 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines. Space characters surrounding line-breaks may be omitted when copied over to the application.
+  * **Solution:** Type the command manually if pasting doesn't work.
 
 </box>
 
@@ -90,16 +91,35 @@ Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
+* `NAME` is mandatory. It should only contain alphanumeric characters, spaces, and apostrophes (e.g., Mary O'Connor). It cannot be blank.
+* `PHONE` must be a numeric string between 8 and 15 digits long (e.g., 91234567 or 60123456789).
+* `INSTAGRAM` should be 1–30 characters long and contain only letters, numbers, underscores, and periods. It should not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `FACEBOOK` should be 5-50 characters long and contain only letters, numbers, and periods. It should not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `ADDRESS` can be any non-blank string.
+* `REMARK` can be any string.
+
+<box type="warning" seamless>
+
+**Note:** A customer must have at least one contact method (`PHONE`, `INSTAGRAM`, `FACEBOOK` or `ADDRESS`).
+
+</box>
+
+<box type="warning" seamless>
+
+**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. (Tip: Consider adding descriptors to differentiate customers with the same name (e.g., "John Doe (neighbour)" and "John Doe (Clementi)".)
+
+</box>
+
 <box type="tip" seamless>
 
-**Tip:** A customer can have any number of tags (including 0)
+**Tip:** A customer can have any number of tags (including 0).
 
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01`
-* `add n/Betsy Crowe t/friend fb/betsy a/Blk 456, Bedok North`
-* `add n/Tech Corp SG a/Tech Tower, Level 12`
+* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01 r/prefers weekend delivery t/VIP t/regular`
+* `add n/Betsy Crowe t/friend fb/betsy.crowe a/Blk 456, Bedok North r/allergic to peanuts`
+* `add n/Tech Corp SG p/67778888 ig/techcorp.sg a/Tech Tower, Level 12 r/Invoicing required`
 
 </div>
 
