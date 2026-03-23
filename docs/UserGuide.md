@@ -85,7 +85,7 @@ Format: `help`
 
 <div class="section-spacing">
 
-### Adding a customer: `add`
+### Adding a customer : `add`
 
 Adds a customer to the customer database.
 
@@ -156,7 +156,7 @@ Examples:
 
 <div class="section-spacing">
 
-### Finding customers: `find`
+### Finding customers : `find`
 
 Finds customers whose any of the field contain any of the given keywords.
 
@@ -177,7 +177,7 @@ Format: `find PREFIX/KEYWORD`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * Limits the search to a single specific field.
-* Only one prefix group are allowed.
+* Only one prefix can be used per command.
 
 Available Prefixes:
 * n/NAME
@@ -215,7 +215,7 @@ Examples:
 
 <div class="section-spacing">
 
-### Adding an order: `order`
+### Adding an order : `order`
 
 Adds a new order for a specific customer.
 
@@ -239,7 +239,7 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 
 <div class="section-spacing">
 
-### Searching for orders: `find-o`
+### Finding orders : `find-o`
 
 Search for different orders with 3 category options: item name, delivery address, customer id
 
@@ -268,7 +268,7 @@ Format: `list-o`
 
 </div>
 
-### Deleting an order: `delete-o`
+### Deleting an order : `delete-o`
 
 Deletes the specific order from the order database.
 
@@ -306,11 +306,14 @@ Format: `exit`
 
 </div>
 
+---
+## Data Storage
+
 <div class="section-spacing">
 
 ### Saving the data
 
-BZNUS data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+BZNUS data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 </div>
 
@@ -376,10 +379,10 @@ Action     | Format, Examples
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
-**Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
-**List Orders** | `list-o`
-**Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
+**Add**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
+**Find** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
+**List** | `list-o`
+**Delete** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
 
 </div>
 
