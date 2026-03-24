@@ -13,20 +13,48 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 --------------------------------------------------------------------------------------------------------------------
 
+
+## Content summery
+1. Quick start
+2. Features
+* command format
+* viewing hlep
+3. Customer command
+* add
+* list
+* edit
+* find
+* delete
+4. Order command
+* order
+* find-o
+* list-o
+* delete-o
+* edit-o
+5. Other command
+* clear
+* exit
+6. Data storage
+7. FAQ
+8. Known issues
+9. Command summery
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
 
-1. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
+3. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all customers.
@@ -41,7 +69,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -79,7 +107,7 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## Customer Commands
 
