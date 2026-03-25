@@ -118,7 +118,7 @@ class JsonAdaptedPerson {
         final Remark modelRemark = remark != null ? new Remark(remark) : null;
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        
+
         // Parse the UUID from storage, or generate a new one if missing
         java.util.UUID modelId;
         try {
@@ -126,7 +126,7 @@ class JsonAdaptedPerson {
         } catch (IllegalArgumentException e) {
             throw new IllegalValueException("Invalid UUID format for person: " + id);
         }
-        
+
         return new Person(modelId, modelName, modelPhone, modelFacebook, modelInstagram, modelAddress, modelRemark, modelTags);
     }
 

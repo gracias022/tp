@@ -56,10 +56,10 @@ public class Person {
      * Name and tags must be present and not null.
      * At least one of phone, Facebook, Instagram or address must be present (not null).
      * Remark can be null.
-     * 
+     *
      * @param id the UUID for this person (usually loaded from storage)
      */
-    public Person(UUID id, Name name, Phone phone, Facebook facebook, Instagram instagram, Address address, 
+    public Person(UUID id, Name name, Phone phone, Facebook facebook, Instagram instagram, Address address,
                   Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, tags);
         this.name = name;
