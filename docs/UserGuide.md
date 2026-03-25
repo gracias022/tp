@@ -13,20 +13,52 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+
+## Table of Contents
+1. [Quick start](#quick-start)
+2. [Features](#features)
+* [Viewing help: help](#viewing-help--help)
+3. [Customer command](#customer-commands)
+* [Adding a customer: add](#adding-a-customer--add)
+* [Listing all customers: list](#listing-all-customers--list)
+* [Editing a customer: edit](#editing-a-customer--edit)
+* [Finding customers: find](#finding-customers--find)
+* [Deleting a customer: delete](#deleting-a-customer--delete)
+4. [Order command](#order-commands)
+* [Adding an order: order](#adding-an-order--order)
+* [Finding orders: find-o](#finding-orders--find-o)
+* [Listing all orders: list-o](#listing-all-orders--list-o)
+* [Deleting an order: delete-o](#deleting-an-order--delete-o)
+5. [Other command](#order-commands)
+* [Clearing all entries: clear](#clearing-all-entries--clear)
+* [Exiting the program: exit](#exiting-the-program--exit)
+6. [Data storage](#data-storage)
+* [Saving the data](#saving-the-data)
+* [Editing the data file](#editing-the-data-file)
+* [Archiving the data [coming in v2.0]](#archiving-data-files-coming-in-v20)
+7. [FAQ](#faq)
+8. [Known issues](#known-issues)
+9. [Command summary](#command-summary)
+* [Customer Commands](#customer-commands-1)
+* [Order Commands](#order-commands-1)
+* [Other Commands](#other-commands-1)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## <a id="quick-start"></a>Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
-   A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
+   A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all customers.
@@ -41,11 +73,11 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## <a id="features"></a>Features
 
 <box type="info" seamless>
 
@@ -66,10 +98,12 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines. Space characters surrounding line-breaks may be omitted when copied over to the application.
+  * **Solution:** Type the command manually if pasting doesn't work.
+
 </box>
 
-### Viewing help : `help`
+### <a id="viewing-help"></a>Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -77,32 +111,63 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
----
+--------------------------------------------------------------------------------------------------------------------
 
-## Customer Commands
+## <a id="customer-commands"></a>Customer Commands
 
-### Adding a customer: `add`
+<div class="section-spacing">
+
+### <a id="add"></a>Adding a customer : `add`
 
 Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
+
+* `NAME` is mandatory. It should only contain alphanumeric characters, spaces, and apostrophes (e.g., Mary O'Connor). It cannot be blank.
+* `PHONE` must be a numeric string between 8 and 15 digits long (e.g., 91234567 or 60123456789).
+* `INSTAGRAM` should be 1–30 characters long and contain only letters, numbers, underscores, and periods. It should not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `FACEBOOK` should be 5-50 characters long and contain only letters, numbers, and periods. It should not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `ADDRESS` can be any non-blank string.
+* `REMARK` can be any string.
+
+<box type="warning" seamless>
+
+**Note:** A customer must have at least one contact method (`PHONE`, `INSTAGRAM`, `FACEBOOK` or `ADDRESS`).
+
+</box>
+
+<box type="warning" seamless>
+
+**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. (Tip: Consider adding descriptors to differentiate customers with the same name (e.g., "John Doe (neighbour)" and "John Doe (Clementi)".)
+
+</box>
+
 <box type="tip" seamless>
 
-**Tip:** A customer can have any number of tags (including 0)
+**Tip:** A customer can have any number of tags (including 0).
+
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01`
-* `add n/Betsy Crowe t/friend fb/betsy a/Blk 456, Bedok North`
-* `add n/Tech Corp SG a/Tech Tower, Level 12`
+* `add n/John Doe p/98765432 ig/john a/John Street, Blk 123, #01-01 r/prefers weekend delivery t/VIP t/regular`
+* `add n/Betsy Crowe t/friend fb/betsy.crowe a/Blk 456, Bedok North r/allergic to peanuts`
+* `add n/Tech Corp SG p/67778888 ig/techcorp.sg a/Tech Tower, Level 12 r/Invoicing required`
 
-### Listing all customers : `list`
+</div>
+
+<div class="section-spacing">
+
+### <a id="list"></a>Listing all customers : `list`
 
 Shows a list of all customers in the address book.
 
 Format: `list`
 
-### Editing a customer : `edit`
+</div>
+
+<div class="section-spacing">
+
+### <a id="edit"></a>Editing a customer : `edit`
 
 Edits an existing customer in the address book.
 
@@ -119,43 +184,49 @@ Examples:
 *  `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd customer to be `Betsy Crower` and clears all existing tags.
 
-### Finding customers: `find`
+</div>
 
-Finds customers whose any of the field contain any of the given keywords.
+<div class="section-spacing">
+
+### <a id="find"></a>Finding customers : `find`
+
+Finds customers whose details match the given keywords. You can search across all fields or target a specific field using prefixes.
 
 #### General Search
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans`.
 * All fields are searched.
-* Only partial words will be matched e.g. `Han` will match `Hans`
+* Partial matches are supported e.g. `Han` will match `Hans`.
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find 99272758` returns `Bernice Yu` as she had the number 99272758<br>\
+* `find 99272758` returns `Bernice Yu` if her contact details contains these digits<br>\
   ![result for 'find 99272758'](images/findBernice.png)
 
 #### Specific Field Search
 Format: `find PREFIX/KEYWORD`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* Limits the search to a single specific field.
-* Only one prefix group are allowed.
+* The search is case-insensitive. e.g `hans` will match `Hans`.
+* Limits the search to a single specified field.
+* Only one prefix can be used per command.
 
 Available Prefixes:
-* n/NAME
-* p/PHONE
-* fb/FACEBOOK
-* ig/INSTAGRAM
-* a/ADDRESS
-* r/REMARK
-* t/TAG
+* `n/NAME`
+* `p/PHONE`
+* `fb/FACEBOOK`
+* `ig/INSTAGRAM`
+* `a/ADDRESS`
+* `r/REMARK`
+* `t/TAG`
 
-Example:
-* find n/Alice returns all persons whose name contains "Alice"
-* find t/regular returns all persons whose tags contain "regular".
+Examples:
+* `find n/Alice` returns all customers whose name contains `Alice`.
+* `find t/regular` returns all customers whose tags contain `regular`.
 
-### Deleting a customer : `delete`
+</div>
+
+### <a id="delete"></a>Deleting a customer : `delete`
 
 Deletes the specified customer from the customer database.
 
@@ -172,20 +243,22 @@ Examples:
 
 ---
 
-## Order Commands
+## <a id="order-commands"></a>Order Commands
 
-### Adding an order: `order`
+<div class="section-spacing">
+
+### <a id="order"></a>Adding an order : `order`
 
 Adds a new order for a specific customer.
 
-Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STATUS]`
+Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]`
 
 * Adds an order to the customer at the specified `INDEX`.
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `ITEM_NAME` should contain only alphanumeric characters and spaces, and cannot be blank.
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
-* `DATE` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
+* `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
 * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
 
@@ -194,7 +267,11 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STAT
 * `order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01`
 * `order 3 i/Salad q/2 at/2026-04-10 1200 s/DELIVERED`
 
-### Searching for orders: `find-o`
+</div>
+
+<div class="section-spacing">
+
+### <a id="find-o"></a>Finding orders : `find-o`
 
 Search for different orders with 3 category options: item name, delivery address, customer id
 
@@ -239,7 +316,9 @@ Shows a list of all orders in the address book.
 
 Format: `list-o`
 
-### Deleting an order: `delete-o`
+</div>
+
+### <a id="delete-o"></a>Deleting an order : `delete-o`
 
 Deletes the specific order from the order database.
 
@@ -255,25 +334,42 @@ Format: `delete-o ORDER_INDEX`
 
 ---
 
-## Other Commands
+## <a id="other-commands"></a>Other Commands
 
-### Clearing all entries : `clear`
+<div class="section-spacing">
+
+### <a id="clear"></a>Clearing all entries : `clear`
 
 Clears all customers and their orders from BZNUS.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+</div>
+
+<div class="section-spacing">
+
+### <a id="exit"></a>Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### Saving the data
+</div>
 
-BZNUS data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+---
+## <a id="data-storage"></a>Data Storage
 
-### Editing the data file
+<div class="section-spacing">
+
+### <a id="saving-data"></a>Saving the data
+
+BZNUS data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+</div>
+
+<div class="section-spacing">
+
+### <a id="edit-data"></a>Editing the data file
 
 BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
@@ -282,15 +378,18 @@ BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addre
 **Caution:**
 If your changes to the data file makes its format invalid, BZNUS will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause BZNUS to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
 </box>
 
-### Archiving data files `[coming in v2.0]`
+</div>
+
+### <a id="archive-data"></a>Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
+## <a id="faq"></a>FAQ
 
 **Q**: How do I transfer my data to another computer?<br>
 **A**:
@@ -301,16 +400,18 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## <a id="known-issues"></a>Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## <a id="command-summary"></a>Command summary
 
-### Customer Commands
+<div class="section-spacing">
+
+### <a id="c-command"></a>Customer Commands
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -320,7 +421,11 @@ Action     | Format, Examples
 **List**   | `list`
 **Delete** | `delete INDEX` <br> e.g., `delete 3`
 
-### Order Commands
+</div>
+
+<div class="section-spacing">
+
+### <a id="o-command"></a>Order Commands
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -330,7 +435,7 @@ Action     | Format, Examples
 **Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`
 **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
 
-### Other Commands
+### <a id="others"></a>Other Commands
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
