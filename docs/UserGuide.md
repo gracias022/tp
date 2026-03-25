@@ -211,6 +211,28 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 
+### Editing an order: `edit-o`
+
+Updates fields of an existing order. Any field you specify replaces the previous value; other fields stay unchanged.
+
+Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]`
+
+* Edits the order at the specified `ORDER_INDEX`. The index refers to the order number shown in the **currently displayed order list**. The index **must be a positive integer**
+* **At least one** of `i/`, `q/`, `at/`, `a/`, or `s/` must be provided. Omitting all of them is not allowed.
+* The order **stays with the same customer**; you cannot reassign an order to another customer with this command.
+* Field rules are the same as when using **`order`** (see **Adding an order** above):
+  * `ITEM_NAME`: alphanumeric characters and spaces only, non-blank.
+  * `QUANTITY`: positive whole number (e.g. `1`, `10`).
+  * `DATE`: `yyyy-mm-dd hhmm` and must be in the future.
+  * `DELIVERY_ADDRESS`: non-empty if you use `a/`.
+  * `STATUS`: one of `PREPARING`, `READY`, `DELIVERED`, `CANCELLED` (case-insensitive).
+* After a successful edit, the full order list is shown again.
+
+**Examples:**
+* `edit-o 2 q/5` — changes the quantity of the 2nd order in the list to `5`.
+* `edit-o 1 s/READY` — marks the first pizza order in the search results as ready.
+* `edit-o 1 i/Salad at/2026-05-01 1800 a/Blk 123 Main Street` — updates item, delivery time, and address for the first order in the current list.
+
 ### Listing all orders : `list-o`
 
 Shows a list of all orders in the address book.
@@ -305,6 +327,7 @@ Action     | Format, Examples
 **Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
 **Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
 **List Orders** | `list-o`
+**Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`
 **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
 
 ### Other Commands
