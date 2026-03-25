@@ -28,6 +28,7 @@ class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
+    private final String id;
     private final String name;
     private final String phone;
     private final String facebook;
@@ -40,10 +41,11 @@ class JsonAdaptedPerson {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("facebook") String facebook, @JsonProperty("instagram") String instagram,
-            @JsonProperty("address") String address, @JsonProperty("remark") String remark,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(@JsonProperty("id") String id, @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone, @JsonProperty("facebook") String facebook,
+            @JsonProperty("instagram") String instagram, @JsonProperty("address") String address,
+            @JsonProperty("remark") String remark, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.facebook = facebook;
@@ -59,6 +61,7 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
+        id = source.getId().toString();
         name = source.getName().fullName;
         phone = source.getPhone().map(p -> p.value).orElse(null);
         facebook = source.getFacebook().map(fb -> fb.value).orElse(null);
@@ -115,7 +118,16 @@ class JsonAdaptedPerson {
         final Remark modelRemark = remark != null ? new Remark(remark) : null;
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelFacebook, modelInstagram, modelAddress, modelRemark, modelTags);
+        
+        // Parse the UUID from storage, or generate a new one if missing
+        java.util.UUID modelId;
+        try {
+            modelId = id != null ? java.util.UUID.fromString(id) : java.util.UUID.randomUUID();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException("Invalid UUID format for person: " + id);
+        }
+        
+        return new Person(modelId, modelName, modelPhone, modelFacebook, modelInstagram, modelAddress, modelRemark, modelTags);
     }
 
 }
