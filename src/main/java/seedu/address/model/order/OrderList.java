@@ -1,6 +1,7 @@
 package seedu.address.model.order;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +53,22 @@ public class OrderList {
     public void removeOrdersForCustomer(UUID customerId) {
         requireNonNull(customerId);
         internalList.removeIf(order -> order.getCustomerId().equals(customerId));
+    }
+
+    /**
+     * Replaces the given order {@code target} in the list with {@code editedOrder}.
+     * {@code target} must exist in the list.
+     * The order identity of {@code editedOrder} must not be the same as another existing order in the list.
+     */
+    public void setOrder(Order target, Order editedOrder) {
+        requireAllNonNull(target, editedOrder);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new OrderNotFoundException();
+        }
+
+        internalList.set(index, editedOrder);
     }
 
     /**
