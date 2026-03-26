@@ -300,6 +300,10 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 
+</div>
+
+<div class="section-spacing">
+
 ### <a id="edit-o"></a>Editing an order : `edit-o`
 
 Updates fields of an existing order. Any field you specify replaces the previous value; other fields stay unchanged.
@@ -321,6 +325,10 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
 * `edit-o 2 q/5` — changes the quantity of the 2nd order in the list to `5`.
 * `edit-o 1 s/READY` — marks the first pizza order in the search results as ready.
 * `edit-o 1 i/Salad at/2026-05-01 1800 a/Blk 123 Main Street` — updates item, delivery time, and address for the first order in the current list.
+
+</div>
+
+<div class="section-spacing">
 
 ### <a id="list-o"></a>Listing all orders : `list-o`
 
@@ -446,6 +454,8 @@ Action     | Format, Examples
 **Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`
 **List Orders** | `list-o`
 **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
+
+</div>
 
 ### <a id="others"></a>Other Commands
 
