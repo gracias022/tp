@@ -24,7 +24,7 @@ public class FindOrderCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all orders whose item, address, status, "
             + "or customerId contain the specified search phrase (case-insensitive) "
-            + "and displays them as a list with index numbers.\n"
+            + "and displays the number of matching orders.\n"
             + "Parameters: i/ITEM_NAME | a/ADDRESS | c/CUSTOMER_ID | s/STATUS\n"
             + "Example: " + COMMAND_WORD + " i/pizza";
 
@@ -56,11 +56,15 @@ public class FindOrderCommand extends Command {
         OrderContainsKeywordsPredicate resolvedPredicate =
                 new OrderContainsKeywordsPredicate(resolveMap);
         model.updateFilteredOrderList(resolvedPredicate);
-        String resultMessage = "=== FIND ORDERS ===\n";
-        if (model.getFilteredOrderList().isEmpty()) {
-            resultMessage += "No orders found.";
+
+        int foundCount = model.getFilteredOrderList().size();
+        String resultMessage;
+        if (foundCount == 0) {
+            resultMessage = "No orders found.";
+        } else if (foundCount == 1) {
+            resultMessage = "1 order found.";
         } else {
-            resultMessage += model.getFilteredOrderList().toString();
+            resultMessage = foundCount + " orders found.";
         }
         return new CommandResult(resultMessage);
     }
