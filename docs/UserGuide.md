@@ -67,7 +67,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `add n/John Doe p/98765432 a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the customer database.
 
-   * `order 1  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list.
+   * `order 1  i/Pizza  q/3  at/2026-06-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -283,14 +283,14 @@ If the customer has no stored address, you will be prompted to enter a delivery 
 
 <box type="tip" seamless>
 
-**Tip:** Use a/PICKUP for pickup orders.
+**Tip:** You can specify a/PICKUP for pickup orders.
 
 </box>
 
 **Examples:**
-* `order 1 i/Pizza q/3 at/2026-04-02 1200`
-* `order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01`
-* `order 3 i/Salad q/2 at/2026-04-10 1200 s/DELIVERED`
+* `order 1 i/Pizza q/3 at/2026-06-02 1200`
+* `order 2 i/Burger q/5 at/2026-07-15 1800 a/123 Jurong West St 42, #05-01`
+* `order 3 i/Salad q/2 at/2026-08-10 1200 s/DELIVERED`
 
 </div>
 
