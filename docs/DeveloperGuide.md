@@ -382,26 +382,35 @@ Use case ends.
 ---
 
 **Use case: UC02 - Delete Customer**
+**Guarantees**:
+* If the deletion cannot be completed (e.g. invalid customer index), the system does not remove any customer.
+* Only customers that are currently displayed can be deleted.
 
 **MSS:**
 
-1. User chooses to delete a specific customer profile.
+1. User enters the delete customer command along with the specified customer.
 
-2. BZNUS requests for confirmation to delete.
+2. BZNUS deletes the customer from the system.
 
-3. User confirms the deletion.
+3. BZNUS deletes all orders associated with the customer from the system.
 
-4. BZNUS deletes the customer profile and removes them from the list.
+4. BZNUS shows a success message to show the customer is deleted.
 
-5. BZNUS shows a success message to show the customer is deleted.
+5. BZNUS updates the displayed list to exclude the deleted customer.
 
    Use case ends.
 
 **Extensions:**
 
-- *a. At any time, User chooses to cancel the deletion.
-  - *a1. BZNUS cancels the deletion process and returns to the previous view.
-  Use case ends.
+* 1a. BZNUS detects invalid or missing fields.
+
+    * 1a1. BZNUS displays an error message.
+
+    * 1a2. User updates entered details.
+
+  Steps 1a1-1a2 are repeated until the information entered is valid.
+
+  Use case resumes from step 2.
 
 ---
 
@@ -483,6 +492,8 @@ Use case ends.
 
 3. BZNUS shows a success message to indicate the order is added.
 
+4. If the new order satisfies the criteria of the currently displayed order list, BZNUS updates the displayed list to include the order.
+
 Use case ends.
 
 **Extensions:**
@@ -496,12 +507,6 @@ Use case ends.
     Steps 1a1-1a2 are repeated until the information entered is correct.
 
     Use case resumes from step 2.
-
-* 3a. BZNUS detects that the newly created order satisfies the criteria of the currently displayed order list.
-
-    * 3a1. BZNUS updates the displayed list to include the order.
-
-    Use case ends.
 
 ---
 
@@ -530,7 +535,7 @@ Use case ends.
 
     * 1a2. User updates entered details.
 
-  Steps 1a1-1a2 are repeated until the information entered is correct.
+  Steps 1a1-1a2 are repeated until the information entered is valid.
 
   Use case resumes from step 2.
 
