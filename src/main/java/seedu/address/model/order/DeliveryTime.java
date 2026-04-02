@@ -25,9 +25,9 @@ public class DeliveryTime {
             DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm")
                     .withResolverStyle(java.time.format.ResolverStyle.STRICT);
 
-    private final LocalDateTime deliveryTime;
-
     public final String value;
+
+    private final LocalDateTime deliveryTime;
 
     /**
      * Constructs a {@code DeliveryTime}.
