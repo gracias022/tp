@@ -185,7 +185,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * `fb/` clears Facebook
   * `a/` clears address
   * `r/` clears remark
-* `n/` (name) cannot be empty. Use `n/NEW_NAME` to change the name.
+* `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name.
 * After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). Otherwise, the edit is rejected.
 * Tags are handled as a set:
   * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
