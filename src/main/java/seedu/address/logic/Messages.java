@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,31 +48,47 @@ public class Messages {
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
+
         builder.append(person.getName());
+        appendContactInfo(builder, person);
+        appendAddress(builder, person);
+        appendRemark(builder, person);
+        appendTags(builder, person);
 
-        person.getPhone().ifPresent(p ->
-                builder.append("; Phone: ").append(p)
-        );
-
-        person.getFacebook().ifPresent(fb ->
-                builder.append("; Facebook: ").append(fb.getDisplayValue())
-        );
-
-        person.getInstagram().ifPresent(ig ->
-                builder.append("; Instagram: ").append(ig.getDisplayValue())
-        );
-
-        person.getAddress().ifPresent(a ->
-                builder.append("; Address: ").append(a)
-        );
-
-        person.getRemark().ifPresent(r ->
-                builder.append("; Remark: ").append(r)
-        );
-
-        builder.append("; Tags: ");
-        person.getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    private static void appendContactInfo(StringBuilder builder, Person person) {
+        List<String> contactParts = new ArrayList<>();
+
+        person.getPhone().ifPresent(p -> contactParts.add("Phone: " + p));
+        person.getFacebook().ifPresent(fb -> contactParts.add("Facebook: " + fb.getDisplayValue()));
+        person.getInstagram().ifPresent(ig -> contactParts.add("Instagram: " + ig.getDisplayValue()));
+
+        if (!contactParts.isEmpty()) {
+            builder.append("\n").append(String.join(" | ", contactParts));
+        }
+    }
+
+    private static void appendAddress(StringBuilder builder, Person person) {
+        person.getAddress().ifPresent(a ->
+                builder.append("\nAddress: ").append(a)
+        );
+    }
+
+    private static void appendRemark(StringBuilder builder, Person person) {
+        person.getRemark().ifPresent(r ->
+                builder.append("\nRemark: ").append(r)
+        );
+    }
+
+    private static void appendTags(StringBuilder builder, Person person) {
+        String tags = person.getTags().stream()
+                .map(tag -> tag.tagName)
+                .sorted()
+                .collect(Collectors.joining(", "));
+
+        builder.append("\nTags: ").append(tags.isEmpty() ? "-" : tags);
     }
 
     /**
