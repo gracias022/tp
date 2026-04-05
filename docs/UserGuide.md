@@ -147,6 +147,12 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 
 <box type="tip" seamless>
 
+**Possible Duplicate Warning:** If a new customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer, BZNUS shows a non-blocking warning in the result message. The customer is still added.
+
+</box>
+
+<box type="tip" seamless>
+
 **Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g. "John Doe (Clementi)" and "John Doe (Jurong)"). A customer can also have any number of tags (including 0).
 
 </box>
@@ -187,6 +193,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * `r/` clears remark
 * `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name.
 * After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). Otherwise, the edit is rejected.
+* If the edited customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer, BZNUS shows a non-blocking warning in the result message. The edit is still applied.
 * Tags are handled as a set:
   * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
   * `t/` clears all existing tags.
