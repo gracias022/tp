@@ -165,6 +165,13 @@ Shows a list of all customers in the address book.
 
 Format: `list`
 
+<box type="tip" seamless>
+
+**Tag display:** Very long tags may be truncated in the customer card for readability.  
+Hover over a truncated tag to view its full text in a tooltip.
+
+</box>
+
 </div>
 
 <div class="section-spacing">
