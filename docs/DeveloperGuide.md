@@ -582,7 +582,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **CLI (Command Line Interface)**: A text-based user interface used to interact with the software by typing commands.
 * **DeliveryTime**: The scheduled date and time at which an order should be delivered.
 * **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through graphical elements like windows and buttons.
-* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home. 
+* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
 * **Item**: Represents the name of the product being ordered.
 * **JSON (JavaScript Object Notation)**: A lightweight, text-based, human-readable format used for storing the application's data locally.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
