@@ -47,13 +47,28 @@ public class DeliveryTimeTest {
 
     @Test
     public void isValidDate() {
-        // past
+        // valid past
         String past = LocalDateTime.now().minusHours(1).format(FORMATTER);
         assertTrue(DeliveryTime.isValidDate(past));
 
-        // future
+        // valid future
         String future = LocalDateTime.now().plusHours(1).format(FORMATTER);
         assertTrue(DeliveryTime.isValidDate(future));
+
+        // invalid format
+        assertFalse(DeliveryTime.isValidDate("2024/10/10 10:00"));
+
+        // nonsense
+        assertFalse(DeliveryTime.isValidDate("not a date"));
+
+        // empty
+        assertFalse(DeliveryTime.isValidDate(""));
+
+        // null
+        assertFalse(DeliveryTime.isValidDate(null));
+
+        // invalid date but correct format
+        assertFalse(DeliveryTime.isValidDate("2024-02-30 10:00"));
     }
 
     @Test
