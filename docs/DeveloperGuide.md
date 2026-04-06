@@ -347,36 +347,36 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC01 - Add Customer**
 
+**Guarantees:**
+* If the command succeeds, exactly one new customer with a unique name is added to the system.
+* If the command fails at any point, no customer is added and the system state remains unchanged.
+
 **MSS:**
 
-1. Seller chooses to add a new customer.
+1. User enters the add customer command with a name. Optional fields such as contact details, remark and tag(s) may also be provided.
 
-2. BZNUS requests for the customer details.
+2. BZNUS validates the input.
 
-3. Seller enters the requested details.
+3. BZNUS checks that the customer name is unique.
 
-4. BZNUS saves the contact information.
+4. BZNUS adds the customer to the system.
 
-5. BZNUS shows a success message to show the customer is added.
+5. BZNUS shows a success message with the details of the added customer.
 
    Use case ends.
 
 **Extensions:**
 
-- 3a. BZNUS detects invalid or missing mandatory data (e.g., blank name).
+- 2a. BZNUS detects invalid or missing mandatory data (e.g. empty name, no contact method, invalid phone number format).
 
-  - 3a1. BZNUS requests for the correct data.
+  - 2a1. BZNUS shows an error message indicating the specific issue found.
 
-  - 3a2. Seller enters new data.
+    Use case ends.
+  
+- 3a. BZNUS detects that the customer name provided (case-insensitive) matches that of an existing customer.
 
-  - Steps 3a1-3a2 are repeated until the data entered are correct.
-
-    Use case resumes from step 4.
-
-- *a. At any time, Seller chooses to cancel adding a customer.
-
-  - *a1. BZNUS discards the input and returns to the previous view.
-
+  - 3a1. BZNUS shows an error message indicating that a customer with the same name already exists in the system.
+    
     Use case ends.
 
 ---
@@ -416,51 +416,45 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC03 - Edit Customer**
 
+**Preconditions:**
+* At least one customer is present in the currently displayed customer list.
+
+**Guarantees:**
+* If the command succeeds, the customer's data is updated as requested and saved to storage.
+* If the command fails at any point, the customer's data remains unchanged. 
+* Only customers that are currently displayed can be edited.
+
 **MSS:**
 
-1. User chooses to edit a specific customer profile.
+1. User enters the edit customer command with a customer index.
 
-2. BZNUS displays the current contact details and allows editing.
+2. BZNUS validates the input (e.g. valid index, at least one field to edit, and valid field formats).
 
-3. User enters the updated details.
+3. BZNUS verifies post-edit constraints (customer name remains unique, and at least one contact method remains for the edited customer).
 
-4. User saves the changes.
+4. BZNUS saves the updated details of the specified customer.
 
-5. BZNUS updates the profile and displays the revised details.
+5. BZNUS shows a success message with the customer's updated details.
 
    Use case ends.
 
 **Extensions:**
 
-- 3a. BZNUS detects invalid data (e.g., letters in a phone number field).
+* 2a. BZNUS detects invalid user input (e.g. invalid index, no fields supplied, empty name, or invalid field value).
 
-    - 3a1. BZNUS requests for the correct data.
+    * 2a1. BZNUS shows an error message indicating the specific issue found.
 
-    - 3a2. Seller enters new data.
+    Use case ends.
 
-    - Steps 3a1-3a2 are repeated until the data entered are correct.
+* 3a. BZNUS detects a post-edit constraint violation (duplicate customer name, or all contact methods cleared for the customer).
 
-    Use case resumes from step 4.
+    * 3a1. BZNUS shows an error message indicating the specific issue found.
 
----
-
-**Use case: UC04 - Add tags to customers**
-
-**MSS:**
-
-1. User chooses to add tags to a specific customer profile.
-
-2. User inputs the desired tags (e.g., "corporate", "vegan", "weekend delivery").
-
-3. User saves the tags.
-
-4. BZNUS updates the customer profile to display the new tags.
-
-   Use case ends.
+    Use case ends.
 
 ---
 
-**Use case: UC05 - Search customer information**
+**Use case: UC04 - Search customer information**
 
 **MSS:**
 
@@ -480,7 +474,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC06 - Add order**\
+**Use case: UC05 - Add order**\
 **Guarantees:**
 * The system records the order only if the provided order information is valid.
 
@@ -510,7 +504,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC07 - Delete order**\
+**Use case: UC06 - Delete order**\
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
 * Only orders that are currently displayed can be deleted.
