@@ -471,8 +471,8 @@
 }
 
 .status-preparing {
-    -fx-background-color: #fff8e1;
-    -fx-text-fill: #b45309;
+    -fx-background-color: rgb(202, 246, 255);
+    -fx-text-fill: #054d88;
 }
 
 .status-ready {
