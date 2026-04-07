@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- Order card icon: change the Image url below (place files under src/main/resources/images/). -->
-<VBox styleClass="order-card" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="8">
+<VBox styleClass="order-card" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="8" fillWidth="true" minWidth="0" maxWidth="420">
   <padding>
     <Insets top="0" right="0" bottom="0" left="0" />
   </padding>
@@ -21,6 +22,7 @@
     <Label fx:id="id" styleClass="person-card-id" />
     <Label fx:id="item" styleClass="order-title" text="$item" wrapText="true" />
   </HBox>
+  <Label fx:id="quantity" styleClass="order-detail" text="$quantity" wrapText="true" />
   <Label fx:id="address" styleClass="order-detail" text="$address" wrapText="true" />
   <Label fx:id="date" styleClass="order-detail" text="$date" wrapText="true" />
   <Label fx:id="status" styleClass="order-status-chip" text="$status" />

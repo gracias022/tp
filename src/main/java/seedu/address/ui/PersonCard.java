@@ -96,6 +96,15 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
+     /**
+     * Configures the wrapping of the label to allow text to wrap to the next line.
+     */
+    private void configureWrappingLabel(Label label) {
+        label.setWrapText(true);
+        label.setMaxWidth(Double.MAX_VALUE);
+    }
+
+
     /**
      * Sets the label text if its value is present, otherwise hides the label.
      */
