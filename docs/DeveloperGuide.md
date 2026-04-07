@@ -547,14 +547,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2. Should be able to hold up to 1000 persons and 5000 orders without a noticeable sluggishness in performance for typical usage.
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4. All customer and order data should be stored locally in a human-editable .json or .txt file.
-5. The system must be designed as a standalone application and should not depend on a remote server or external database.
-6. All valid commands should display results within 2 seconds of the user pressing 'Enter'.
-7. The interface should be intuitive enough that a home-based F&B seller with basic computer literacy can navigate the system without needing a comprehensive training manual.
-8. The system should handle invalid user inputs gracefully by displaying clear and helpful error messages without crashing.
+#### Portability Requirements
+1. The system should work on any _mainstream OS_ with Java `17` or above installed. Users should not need to install additional runtime dependencies.
+
+#### Performance Requirements
+1. The system should support up to **1000 customers** and **5000 orders** without noticeable sluggishness in performance for typical usage.
+2. For all valid commands, results should be displayed within **2 seconds** of submitting the command.
+
+#### Scalability Requirements
+1. The system should allow future addition of features such as data archiving and undo/redo without requiring major refactoring of existing code.
+2. The system should be designed to allow future support for additional contact fields and order details (e.g. delivery instructions) without requiring major refactoring of existing code.
+
+#### Usability Requirements
+1. A user with above-average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using mouse-driven interactions.
+2. The interface should be intuitive enough that a home-based F&B seller with basic computer literacy can use the system without requiring extensive training.
+3. Error messages should clearly describe the issue detected and, where practical, suggest how to correct it.
+
+#### Reliability Requirements
+1. The system should handle invalid user inputs gracefully by showing clear error messages instead of crashing.
+2. The system must not corrupt or partially update customer or order data in the event of an invalid command or unexpected failure.
+3. All changes to customer and order data should be saved to disk immediately after a successful data-modifying command.
+
+#### Data Requirements
+1. All customer and order data should be stored locally in a human-editable JSON file.
+2. The storage format should remain readable in a standard text editor at the maximum expected data size (1000 customers, 5000 orders).
+
+#### Security & Privacy Requirements
+1. The system should not transmit customer or order data to external services during normal operation. Customer data should remain on the user's local machine unless the user explicitly copies or shares the data file.
+2. The system should fail safely on corrupted storage data (e.g. recover to a safe state) instead of executing undefined behavior.
+
+#### Testability Requirements
+1. Core logic (parsing, command execution, and model updates) should be testable without launching the GUI.
+2. Command outcomes should be deterministic for the same input and initial state, enabling reliable automated tests.
+
+#### Constraints
+1. The system should be a standalone desktop application and must not depend on a remote server or external database.
 
 </div>
 
@@ -639,3 +666,5 @@ testers are expected to do more *exploratory* testing.
 Team size: 5
 
 1. **Add non-blocking warnings for duplicate contact details**: Currently, BZNUS only checks for duplicate customer names. As a result, users may accidentally create duplicate entries for the same customer with the same phone number or social media handle. We plan to display a non-blocking warning when a new or edited customer shares the same phone number, Facebook username, or Instagram handle as existing customer(s). The warning will highlight the matching contact fields and may list customers with overlapping details to help users decide whether the new or edited entry is intentional. This helps users spot potential duplicates early without blocking legitimate entries (e.g. shared contact details among family members or corporate customers).
+
+2. **Implement undo/redo functionality**: We plan to implement undo and redo commands that allow users to revert or reapply their most recent data-modifying actions (e.g. adding, deleting, or editing customers and orders). This provides users with a safety net to recover from mistakes or experiment with changes without fear of making irreversible errors.
