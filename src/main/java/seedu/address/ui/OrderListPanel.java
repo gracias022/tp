@@ -59,7 +59,7 @@ public class OrderListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new OrderCard(order).getRoot());
+                setGraphic(new OrderCard(order, getIndex() + 1).getRoot());
             }
         }
     }

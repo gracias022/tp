@@ -18,6 +18,7 @@
         <Image url="@/images/card_icon_order.png" smooth="true" />
       </image>
     </ImageView>
+    <Label fx:id="id" styleClass="person-card-id" />
     <Label fx:id="item" styleClass="order-title" text="$item" wrapText="true" />
   </HBox>
   <Label fx:id="address" styleClass="order-detail" text="$address" wrapText="true" />

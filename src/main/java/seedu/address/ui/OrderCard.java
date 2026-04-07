@@ -13,7 +13,9 @@ public class OrderCard extends UiPart<Region> {
     private static final String FXML = "OrderListCard.fxml";
 
     public final Order order;
-
+    public final int displayedIndex;
+    @FXML
+    private Label id;
     @FXML
     private Label item;
     @FXML
@@ -26,12 +28,14 @@ public class OrderCard extends UiPart<Region> {
     /**
      * Creates an {@code OrderCard} with the given {@code Order}.
      */
-    public OrderCard(Order order) {
+    public OrderCard(Order order, int displayedIndex) {
         super(FXML);
         this.order = order;
+        this.displayedIndex = displayedIndex;
 
         applyStatusStyle(order.getStatus().value);
 
+        id.setText(displayedIndex + ".");
         item.setText("Order: " + order.getItem().value + " (x" + order.getQuantity().value + ")");
 
         address.setText("Address: " + order.getAddress().value);
