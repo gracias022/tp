@@ -344,6 +344,8 @@ The edit command updates fields of the customer at `INDEX` in the currently disp
 
 <div class="section-spacing">
 
+### Undo/Redo feature
+
 #### Proposed Implementation
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
