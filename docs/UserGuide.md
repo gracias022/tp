@@ -176,7 +176,7 @@ Examples:
 <box type="info" seamless>
 
 **Expected output:**
-On success, if all fields are provided, the app displays: 
+On success, if all fields are provided, you will see the following message:
 ```
 New customer added: NAME
 Phone: PHONE | Facebook: FACEBOOK | Instagram: INSTAGRAM
@@ -187,9 +187,9 @@ Tags: TAG1, TAG2, ...
 Note that only the fields provided in the command will be shown in the output. For example, if you add a customer with only name and phone number, the output will only show the name, phone number and `Tags: -`.
 
 **Sample output for Example 1:**
-<Insert screenshot here>
-
-If the customer name is a duplicate (case-insensitive) or invalid input is provided, an error message will be shown. Please refer to the [Troubleshooting section](#troubleshooting) for more details.
+![Sample output for Example 1](images/addCustomerSampleOutput.png)
+<br>
+If the customer name is a duplicate or invalid input is provided, an error message will be shown. Please refer to the [Troubleshooting section](#troubleshooting) for more details.
 
 </box>
 
@@ -203,6 +203,15 @@ Shows a list of all customers in the customer database.
 
 Format: `list`
 
+<box type="info" seamless>
+
+**Expected output:**
+Displays all customers in the database, or shows "Customer list is empty." if the database is empty.
+
+![Sample output for List Customers](images/listCustomersSampleOutput.png)
+
+</box>
+
 <box type="tip" seamless>
 
 **Tip:** This is a useful command to reset filters on the customer list at any time.
@@ -213,13 +222,6 @@ Format: `list`
 
 **Tag display:** Very long tags may be truncated in the customer card for readability.
 Hover over a truncated tag to view its full text in a tooltip.
-
-</box>
-
-<box type="info" seamless>
-
-**Expected output:**
-Displays all customers in the database, or shows "Customer list is empty." if the database is empty.
 
 </box>
 
@@ -257,7 +259,7 @@ Examples:
 <box type="info" seamless>
 
 **Expected output:**
-On success, if the edited customer still has all contact details, the app displays the following success message:
+On success, if the edited customer has valid values for all fields, you will see the following message:
 ```
 Edited Customer: NAME
 Phone: PHONE | Facebook: FACEBOOK | Instagram: INSTAGRAM
@@ -266,8 +268,8 @@ Remark: REMARK
 Tags: TAG1, TAG2, ...
 ```
 
-Sample output for `edit 1 p/91234567 a/John Street, Blk 123, #02-02` (Example 1):
-<Insert screenshot here>
+Sample output for Example 1:
+![Sample output for Edit Customer](images/editCustomerSampleOutput.png)
 
 If the index is invalid, the customer name becomes a duplicate, or all contact methods would be cleared, an error message will be shown. Please refer to the [Troubleshooting section](#troubleshooting) for more details.
 
