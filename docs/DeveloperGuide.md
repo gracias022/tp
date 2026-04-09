@@ -181,31 +181,37 @@ This section describes some noteworthy details on how certain features are imple
 
 <div class="section-spacing">
 
-### \[Proposed\] Undo/redo feature
+### Find Order feature
 
-#### Proposed Implementation
+#### Implementation 
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The find order(find-o) feature is facilitated by `OrderContainsKeywordsPredicate` and related classes.It allows users to search for orders based on different criteria (item, address, customer index, order status) with AND logic, meaning that only orders that match all specified criteria will be returned in the search results.
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+The feature involves three main componenets:
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+* `FindOrderCommandParser` — Parses input arguments and builds a map of search criteria.
+* `FindOrderCommand` — Executes the search, resolves customer identifiers, and applies filtering.
+* `OrderContainsKeywordsPredicate` — Tests whether each order matches all search criteria.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+These operations are exposed in the `Model` interface:
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+* `Model#updateFilteredOrderList(Predicate<Order> predicate)` — Updates the displayed order list based on the predicate.
+* `Model#getFilteredOrderList()` — Returns the currently displayed (filtered) orders.
 
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Given below is an example usage scenario and how the find order feature behaves at each step.
 
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
+Step 1. The user launches the application and types find-o i/pizza. The `FindOrderCommandParser`  receives `i/pizza`, parses it, and builds a map of search criteria with the key `i` and value `pizza`. 
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+<puml src="diagrams/Find-oState0.puml" alt="Find-oState0" />
 
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
+Step 2. The `FindOrderCommand` receives the map of search criteria and iterates through the search map to resolve customer identifiers (e.g., `c/1` to `Person` object) and build a list of predicates. In this case, it creates an `OrderContainsKeywordsPredicate` with the item keyword `pizza`. The `FindOrderCommand` then calls `Model#updateFilteredOrderList(predicate)` to update the displayed order list to only show orders that match the predicate.
+
+<puml src="diagrams/Find-oState1.puml" alt="Find-oState1" />
+
+Step 3. The `OrderContainsKeywordsPredicate` tests each order against the search criteria. Only orders that contain the item keyword `pizza` will be included in the filtered list of orders returned by `Model#getFilteredOrderList()`, which is what the UI displays to the user.
+
+<puml src="diagrams/Find-oState2.puml" alt="Find-oState2" />
 
 <box type="info" seamless>
 
@@ -213,66 +219,53 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The UI displays the filtered results to the user. The `addressBookStateList` remains unchanged as the find order command does not modify the address book data.
 
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
+<puml src="diagrams/Find-oState3.puml" alt="Find-oState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+**Note:** The `addressBookStateList` is only modified when a command that changes the address book data is executed successfully. Since the find order command does not change the address book data, it does not affect the address list.
 
 </box>
 
 The following sequence diagram shows how an undo operation goes through the `Logic` component:
 
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
+<puml src="diagrams/Find-oSequenceDiagram.puml" alt="FindOrderCommand Sequence Diagram" />
+
+The following sequence diatram shows how the `Model` component handles the find order command when filtering the order list:
+
+<puml src="diagrams/Find-oSequenceDiagram-Model.puml" alt="FindOrderCommand Logic-Model Sequence Diagram" />
 
 <box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** The `Model` component's `updateFilteredOrderList` method is responsible for applying the `OrderContainsKeywordsPredicate` to filter the list of orders. This method updates the internal state of the `Model` to reflect the new filtered list, which is then observed by the UI to update the displayed orders accordingly.
 
 </box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
 The following activity diagram summarizes what happens when a user executes a new command:
 
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
+<puml src="diagrams/Find-oActivityDiagram.puml" width="250" />
 
 #### Design considerations:
 
-**Aspect: How undo & redo executes:**
+**Aspect: Search Logic (And vs OR)**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+* **Alternative 1 (current choice):** Combine all criteria with AND logic.
+  * Pros: Precise filtering; users can compose complex queries.
+  * Cons: More restrictive; requires users to remember all criteria are combined.
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+* **Alternative 2:** Combine all criteria with OR logic.
+  * Pros: More flexible; users can find results that match any of the criteria.
+  * Cons: Less precise; may return too many results if criteria are broad.
 
-_{more aspects and alternatives to be added}_
+**Aspect: Customer Identifier Format**
+* **Alternative 1 (current choice):** Use `c/` prefix for customer index.
+  * Pros: Clear and concise; consistent with other command formats.
+  * Cons: Requires users to remember the specific prefix for customer identifiers.
+* **Alternative 2:** Allow direct customer names without a prefix.
+  * Pros: More intuitive for users who prefer natural language input.
+  * Cons: Potential ambiguity if multiple customers have similar names; more complex parsing logic.
 
 </div>
 
