@@ -59,6 +59,7 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
    - [Customer Commands](#c-command)
    - [Order Commands](#o-command)
    - [Other Commands](#others)
+10. [Troubleshooting](#troubleshooting)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -628,5 +629,173 @@ _Details coming soon ..._
 --------------------------------------------------------------------------------------------------------------------
 
 ## Troubleshooting
-This section provides solutions to common issues that users may encounter when using BZNUS.
+This section provides quick fixes for common user-facing issues.
+
+### Add customer (`add`)
+
+<panel header="Duplicate customer name" type="seamless">
+
+**Warning shown:**  
+"A customer with the same name already exists in the database."
+
+**Why this happens:**  
+Customer names are unique (case-insensitive, whitespace-normalized).
+
+**What to do:**  
+Use a different name that is not already in the customer database  
+(e.g. include a descriptor such as `John Doe (Jurong)`).
+
+</panel>
+
+<panel header="No contact method provided" type="seamless">
+
+**Warning shown:**  
+"At least one contact method (phone, Facebook, or Instagram) must be provided."
+
+**Why this happens:**  
+At least one contact method is required.
+
+**What to do:**  
+Include at least one of `p/`, `ig/`, or `fb/`.
+
+</panel>
+
+<panel header="Invalid field format" type="seamless">
+
+**Warning shown (any one of these):**
+- "Name must be 1 to 100 characters, start with a letter or number, and contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)."
+- "Phone number must be 7 to 15 digits and contain only numbers (no spaces, '+' sign, or other symbols)."
+- "Instagram username must be 1 to 30 characters, start with a letter or number, and contain only letters, numbers, underscores, and periods..."
+- "Facebook username must be 5 to 50 characters, start with a letter or number, and contain only letters, numbers, and periods..."
+- "Address cannot be blank and must not exceed 200 characters."
+- "Remark cannot be blank and must not exceed 500 characters."
+- "Tag must contain at least one letter or number, and may include spaces, underscores, and hyphens."
+
+**Why this happens:**  
+The input for a specific field does not meet the required field constraints.
+
+**What to do:**  
+Correct the specific field format and run the command again. Refer to the [Adding a customer](#add) section for detailed field requirements.
+
+</panel>
+
+<panel header="Invalid command format" type="seamless">
+
+**Warning shown:**  
+"Invalid command format! ..."
+
+**Why this happens:**  
+The command is missing required prefixes or has the wrong structure.
+
+**What to do:**  
+Ensure `add` includes `n/NAME` and at least one of `p/`, `ig/`, or `fb/`.  
+Refer to the [Adding a customer](#add) section for the correct format.
+
+</panel>
+
+<panel header="Duplicate single-valued prefixes" type="seamless">
+
+**Warning shown (example):**  
+"Multiple values specified for the following single-valued field(s): n/"
+
+**Why this happens:**  
+Prefixes like `n/`, `p/`, `fb/`, `ig/`, `a/`, and `r/` can only appear once.
+
+**What to do:**  
+Keep to only one value for each single-valued prefix specified (`n/`, `p/`, `fb/`, `ig/`, `a/`, `r/`).
+
+</panel>
+
+<div style="height: 30px;"></div>
+
+### Edit customer (`edit`)
+
+<panel header="Invalid index" type="seamless">
+
+**Warning shown:**  
+"The customer index provided is invalid."
+
+**Why this happens:**  
+The index does not exist in the currently displayed customer list.
+
+**What to do:**
+1. Run `list`
+2. (Optional): Use `find KEYWORD` or `find PREFIX/KEYWORD` to narrow down the list if needed.
+3. Retry the `edit` command with an index **within the displayed range** (e.g. `edit 1 ...` to edit the first customer in the currently displayed list).
+
+</panel>
+
+<panel header="Invalid command format" type="seamless">
+
+**Warning shown:**  
+"Invalid command format! ..."
+
+**Why this happens:**  
+- Case 1: The structure of the command is incorrect (e.g. you ran `edit INDEX` without specifying any fields to change).<br>  
+- Case 2: The index entered is not a positive integer.
+
+**What to do:**  
+- Solution 1: Ensure you include a valid customer index and at least one field to edit (e.g., `n/`, `a/`, `p/`, `fb/`, `ig/`, `r/`). Refer to the [Editing a customer](#edit) section for the correct format.  
+    Example: `edit 1 n/John Doe`<br>
+
+- Solution 2: Use a positive integer index that is within the range of the currently displayed customer list.
+
+</panel>
+
+<panel header="Edit rejected after clearing at least one of `p/`, `ig/`, or `fb/`" type="seamless">
+
+**Warning shown:**  
+"The edited customer must still have at least one contact method (phone, Facebook, or Instagram)."
+
+**Why this happens:**  
+The edit would leave the customer with no contact methods.
+
+**What to do:**  
+Ensure at least one of `p/`, `ig/`, or `fb/` remains after editing.
+
+</panel>
+
+<panel header="Duplicate customer after editing name" type="seamless">
+
+**Warning shown:**  
+"A customer with the same name already exists in the database."
+
+**Why this happens:**  
+Customer names must be unique (case‑insensitive, whitespace‑normalised).
+
+**What to do:**  
+Use a different name that is not already in the customer database  
+(e.g. include a descriptor such as `John Doe (Jurong)`).
+
+</panel>
+
+<panel header="Duplicate single‑valued prefixes" type="seamless">
+
+**Warning shown (example):**  
+"Multiple values specified for the following single-valued field(s): n/"
+
+**Why this happens:**  
+Prefixes such as `n/`, `p/`, `fb/`, `ig/`, `a/`, and `r/` can only appear once in the command.
+
+**What to do:**  
+Keep only one value for each single-valued prefix specified (`n/`, `p/`, `fb/`, `ig/`, `a/`, `r/`).
+
+</panel>
+
+<div style="height: 30px;"></div>
+
+### List customers (`list`)
+
+<panel header="Customer list is empty after running `list`" type="seamless">
+
+**Why this happens:**  
+There are currently no customers stored in BZNUS, or the data file (`addressbook.json`) could not be loaded.
+
+**What to do:**
+- Add a new customer using `add`, or
+- If you expected existing data, check the [Editing the data file](#edit-data) section for steps to recover from a corrupted `addressbook.json`.
+
+</panel>
+
+<div style="height: 30px;"></div>
 
