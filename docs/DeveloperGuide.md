@@ -932,7 +932,7 @@ testers are expected to do more *exploratory* testing.
 
 <div class="section-spacing">
 
-<div class="section-spacing">
+### Listing all customers
 
 1. Listing all customers from any current customer view
 
@@ -954,6 +954,8 @@ testers are expected to do more *exploratory* testing.
     Expected: A message indicating that the customer list is empty is shown.
 
 </div>
+
+<div class="section-spacing">
 
 ### Adding an order
 
