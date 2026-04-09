@@ -179,6 +179,26 @@ This section describes some noteworthy details on how certain features are imple
 
 <div class="section-spacing">
 
+### Order management
+
+The `Model` component manages `Order` entities using an `OrderList`, which stores all orders in the address book. Each `Order` records the customer’s `UUID` rather than holding a direct reference to a `Person` object. `Person` objects are replaced wholesale when edited, so storing a reference would become outdated. Using `UUID` keeps orders stable and avoids cascading updates when customer details change.
+
+An `Order` stores the following fields:
+* Customer’s `UUID`
+* `Item`
+* `Quantity`
+* `DeliveryTime`
+* `Address`
+* `Status`
+
+These fields (except the customer’s `UUID`) are implemented as domain classes, allowing each to encapsulate its own validation and formatting logic. Optional fields, `Address` and `Status`, allow the system to fall back to the customer’s saved address or a default status when these values are not provided by the user.
+
+`OrderList` wraps an internal `ObservableList<Order>`, ensuring that UI components automatically update whenever orders are added or modified. This design integrates the new `Order` entity into the existing model while minimizing coupling.
+
+</div>
+
+<div class="section-spacing">
+
 ### Find Order feature
 #### Implementation
 
@@ -265,8 +285,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Cons: Potential ambiguity if multiple customers have similar names; more complex parsing logic.
 
 </div>
-
-
 
 <div class="section-spacing">
 
@@ -524,7 +542,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC02 - Delete Customer**\
+**Use case: UC02 - Delete Customer**
+
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid customer index), the system does not remove any customer.
 * Only customers that are currently displayed can be deleted.
@@ -621,7 +640,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC05 - List customers**\
+**Use case: UC05 - List customers**
 
 **Guarantees:**
 * The system displays the full customer list.
@@ -647,7 +666,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC06 - Add order**\
+**Use case: UC06 - Add order**
+
 **Guarantees:**
 * The system records the order only if the provided order information is valid.
 
@@ -677,7 +697,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC07 - Delete order**\
+**Use case: UC07 - Delete order**
+
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
 * Only orders that are currently displayed can be deleted.
@@ -708,7 +729,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC08 - List orders**\
+**Use case: UC08 - List orders**
 
 **Guarantees:**
 * The system displays the full order list.
@@ -1140,6 +1161,8 @@ Team size: 5
 
 3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
 
+<div class="section-spacing">
+
 ## **Appendix: Effort**
 
 Compared with AB3, BZNUS required substantially more effort because it extends a single-entity contact manager into a multi-entity system with linked `Customer` and `Order` workflows. The added complexity came from coordinating model design, validation, persistence, and UI updates across two related domains instead of one.
@@ -1185,3 +1208,5 @@ Our key achievements include:
 * **A maintainable and extensible codebase**, supported by modular design, clear separation of concerns, and well‑documented components.
 * **Comprehensive automated testing**, covering validation rules, cross‑entity interactions, and persistence behaviour to ensure long-term code reliability.
 * **Clear and user‑focused documentation**, with updated UG/DG sections, diagrams, and testing instructions that reflect the expanded feature set.
+
+</div>
