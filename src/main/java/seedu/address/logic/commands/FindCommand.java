@@ -12,7 +12,7 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case-insensitive.
  */
 public class FindCommand extends Command {
 
@@ -25,7 +25,7 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " Blk 30 \n";
 
     public static final String MESSAGE_USAGE_SPECIFIC = COMMAND_WORD
-            + ": Finds persons matching specific criteria using prefixes."
+            + ": Finds persons matching specific criteria using prefixes "
             + "and displays them as a list\n"
             + "Parameters: [n/NAME] [p/PHONE] [a/ADDRESS] [t/TAGS] [fb/FACEBOOK] [ig/INSTAGRAM] [r/REMARK]\n"
             + "Example: " + COMMAND_WORD + " n/John t/VIP";

@@ -116,13 +116,13 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
     public String getSummary() {
         if (isGeneralSearch) {
-            return "Keyword: " + searchPhrase.trim();
+            return "keyword: " + searchPhrase.trim();
         }
 
         return specificKeywords.entrySet().stream()
                 .map(entry -> entry.getKey().toString() + ": " + entry.getValue())
                 .reduce((s1, s2) -> s1 + ", " + s2)
-                .map(s -> "Keyword: [" + s + "]")
+                .map(s -> "keyword: [" + s + "]")
                 .orElse("All");
     }
 
