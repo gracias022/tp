@@ -645,7 +645,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC08 - List orders**\
+**Use case: UC08 - List orders**
 
 **Guarantees:**
 * The system displays the full order list.
