@@ -262,7 +262,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: -bznus-surface;
+    -fx-background-color: -bznus-header-bar;
 }
 
 .menu-bar .label {
@@ -539,4 +539,9 @@
 #orderListView .list-cell:filled:selected {
     -fx-background-color: #f4f6f8;
     -fx-border-width: 0;
+}
+
+.orders-context-label {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }

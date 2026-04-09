@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Person;
  */
 public class OrderListPanel extends UiPart<Region> {
     private static final String FXML = "OrderListPanel.fxml";
+    private Person currentContextPerson;
 
     @FXML
     private Label ordersContextLabel;
@@ -30,16 +32,39 @@ public class OrderListPanel extends UiPart<Region> {
 
         orderListView.setItems(orderList);
         orderListView.setCellFactory(listView -> new OrderListViewCell());
+
+        orderListView.getItems().addListener((ListChangeListener<Order>) change -> updateOrdersHeader());
+        updateOrdersHeader(); 
     }
 
     /**
      * Updates the sub-heading to match the customer whose orders are in view.
      */
     public void setOrdersContext(Person person) {
-        if (person == null) {
+        currentContextPerson = person;
+        updateOrdersHeader();
+    }
+
+    /**
+     * Updates the header of the orders list to match the current context person.
+     */
+    private void updateOrdersHeader() {
+        boolean isEmpty = orderListView.getItems() == null || orderListView.getItems().isEmpty();
+
+        if (isEmpty) {
+            if (currentContextPerson == null) {
+                ordersContextLabel.setText("No orders to display. Add one using 'order' command.");
+            } else {
+                ordersContextLabel.setText("No orders for " + currentContextPerson.getName().fullName
+                    + ". Add one using 'order' command.");
+            }
+            return;
+        }
+
+        if (currentContextPerson == null) {
             ordersContextLabel.setText("Orders");
         } else {
-            ordersContextLabel.setText("Orders for " + person.getName().fullName);
+            ordersContextLabel.setText("Orders for " + currentContextPerson.getName().fullName);
         }
     }
 

@@ -5,6 +5,11 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <Label fx:id="ordersContextLabel" styleClass="orders-context-label" text="Orders" maxWidth="Infinity" />
+  <Label fx:id="ordersContextLabel"
+       styleClass="orders-context-label"
+       text="Orders"
+       maxWidth="Infinity"
+       alignment="CENTER" 
+  />
   <ListView fx:id="orderListView" VBox.vgrow="ALWAYS" />
 </VBox>
