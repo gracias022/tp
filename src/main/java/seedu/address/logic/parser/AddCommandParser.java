@@ -61,8 +61,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
         // Check at least one contact method is provided
-        if (!hasAtLeastOneContactMethod(argMultimap, PREFIX_PHONE, PREFIX_FACEBOOK,
-                PREFIX_INSTAGRAM, PREFIX_ADDRESS)) {
+        if (!hasAtLeastOneContactMethod(argMultimap, PREFIX_PHONE, PREFIX_FACEBOOK, PREFIX_INSTAGRAM)) {
             logger.warning("AddCommand rejected: no contact method provided.");
             throw new ParseException(MESSAGE_MISSING_CONTACT_METHOD);
         }

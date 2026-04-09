@@ -55,9 +55,8 @@ public class EditCommand extends Command {
             + "- " + PREFIX_NAME + " must include a value if provided; names cannot be cleared.\n"
             + "- After editing, the customer must still have at least one contact method: "
             + PREFIX_PHONE + ", "
-            + PREFIX_FACEBOOK + ", "
-            + PREFIX_INSTAGRAM + ", or "
-            + PREFIX_ADDRESS + ".\n\n"
+            + PREFIX_FACEBOOK + ", or "
+            + PREFIX_INSTAGRAM + ".\n\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "90234567 "
             + PREFIX_INSTAGRAM + "alex_yeoh";
@@ -158,8 +157,7 @@ public class EditCommand extends Command {
         assert person != null;
         return person.getPhone().isPresent()
                 || person.getFacebook().isPresent()
-                || person.getInstagram().isPresent()
-                || person.getAddress().isPresent();
+                || person.getInstagram().isPresent();
     }
 
     @Override

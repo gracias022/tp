@@ -790,14 +790,14 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: First displayed customer has at least one contact method.
    
-   2. Test case: `edit 1 p/ fb/ ig/ a/Blk 123 Clementi Ave 2`<br>
-      Expected: First displayed customer's phone/Facebook/Instagram are cleared, with address set to "Blk 123 Clementi Ave 2". Success message shown.
+   2. Test case: `edit 1 p/ fb/ ig/test.ig`<br>
+      Expected: First displayed customer's phone/Facebook are cleared, with Instagram set to "test.ig". Success message shown.
    
 4. Editing a customer by **clearing all contact methods**
 
    1. Prerequisite: First displayed customer has at least one contact method.
    
-   2. Test case: `edit 1 p/ fb/ ig/ a/`<br>
+   2. Test case: `edit 1 p/ fb/ ig/`<br>
       Expected: Command fails with an error message indicating that at least one contact method must remain. No changes applied.
    
 5. Editing a customer **without providing any fields** to edit
