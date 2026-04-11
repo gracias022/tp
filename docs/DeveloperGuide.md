@@ -204,7 +204,7 @@ These fields (except the customer’s `UUID`) are implemented as domain classes,
 
 The find order(find-o) feature is facilitated by `OrderContainsKeywordsPredicate` and related classes.It allows users to search for orders based on different criteria (item, address, customer index, order status) with AND logic, meaning that only orders that match all specified criteria will be returned in the search results.
 
-The feature involves three main componenets:
+The feature involves three main components:
 
 * `FindOrderCommandParser` — Parses input arguments and builds a map of search criteria.
 * `FindOrderCommand` — Executes the search, resolves customer identifiers, and applies filtering.
@@ -247,7 +247,7 @@ Step 4. The UI displays the filtered results to the user. The `addressBookStateL
 
 </box>
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+The following sequence diagram shows how `FindOrderCommandParser` parses a find-o command:
 
 <puml src="diagrams/Find-oSequenceDiagram.puml" alt="FindOrderCommand Sequence Diagram" />
 
@@ -434,9 +434,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   itself.
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
 
 
 --------------------------------------------------------------------------------------------------------------------
