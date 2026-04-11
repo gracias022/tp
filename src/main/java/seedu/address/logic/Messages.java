@@ -1,14 +1,15 @@
 package seedu.address.logic;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
@@ -30,8 +31,7 @@ public class Messages {
     public static final String MESSAGE_MISSING_CONTACT_METHOD =
             "At least one contact method (phone, Facebook, or Instagram) must be provided.";
     public static final String MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT =
-            "The edited customer must still have at least one contact method "
-                    + "(phone, Facebook, or Instagram).";
+            "The edited customer must still have at least one contact method (phone, Facebook, or Instagram).";
     public static final String MESSAGE_NO_SAVED_ADDRESS =
             "Customer has no saved address. Please specify delivery address with a/ or use a/PICKUP for pickup orders.";
     public static final String MESSAGE_WARNING_DUPLICATE_CONTACT = "WARNING: Duplicate contact details detected. "
