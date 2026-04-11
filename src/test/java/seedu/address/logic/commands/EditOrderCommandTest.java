@@ -58,7 +58,10 @@ public class EditOrderCommandTest {
         EditOrderCommand editOrderCommand = new EditOrderCommand(INDEX_FIRST_ORDER, descriptor);
 
         Person customer = model.findPersonById(firstOrder.getCustomerId());
-        String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS,
+        String quantityWarning = String.format(EditOrderCommand.MESSAGE_QUANTITY_CHANGED_WARNING,
+                VALID_QUANTITY_5, editedOrder.getStatus(), INDEX_FIRST_ORDER.getOneBased());
+        String expectedMessage = quantityWarning
+                + String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS,
                 Messages.format(editedOrder, customer.getName().toString()));
 
         CommandResult result = editOrderCommand.execute(model);
@@ -103,7 +106,10 @@ public class EditOrderCommandTest {
         EditOrderCommand editOrderCommand = new EditOrderCommand(indexLastOrder, descriptor);
 
         Person customer = model.findPersonById(lastOrder.getCustomerId());
-        String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS,
+        String quantityWarning = String.format(EditOrderCommand.MESSAGE_QUANTITY_CHANGED_WARNING,
+                VALID_QUANTITY_5, editedOrder.getStatus(), indexLastOrder.getOneBased());
+        String expectedMessage = quantityWarning
+                + String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS,
                 Messages.format(editedOrder, customer.getName().toString()));
 
         CommandResult result = editOrderCommand.execute(model);
