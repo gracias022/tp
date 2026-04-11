@@ -91,10 +91,16 @@ public class EditOrderCommand extends Command {
         model.setOrder(orderToEdit, editedOrder);
 
         String customerName = customer.getName().toString();
-        return new CommandResult(String.format(
+        String resultMessage = "";
+        if (editOrderDescriptor.getDeliveryTime().isPresent()
+                && !editedOrder.getDeliveryTime().isInFuture()) {
+            resultMessage += AddOrderCommand.MESSAGE_PAST_TIME + "\n";
+        }
+        resultMessage += String.format(
             MESSAGE_EDIT_ORDER_SUCCESS,
             Messages.format(editedOrder, customerName)
-        ));
+        );
+        return new CommandResult(resultMessage);
     }
 
     /**

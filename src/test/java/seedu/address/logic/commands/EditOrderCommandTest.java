@@ -67,6 +67,27 @@ public class EditOrderCommandTest {
     }
 
     @Test
+    public void execute_deliveryTimeInPast_showsWarning() throws CommandException {
+        model.updateFilteredOrderList(order -> true);
+        Order firstOrder = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
+        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
+                .withDeliveryTime("2000-01-01 1200")
+                .build();
+        EditOrderCommand editOrderCommand = new EditOrderCommand(INDEX_FIRST_ORDER, descriptor);
+
+        Order editedOrder = new OrderBuilder(firstOrder)
+                .withDeliveryTime("2000-01-01 1200")
+                .build();
+        Person customer = model.findPersonById(firstOrder.getCustomerId());
+        String expectedMessage = AddOrderCommand.MESSAGE_PAST_TIME + "\n"
+                + String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS,
+                Messages.format(editedOrder, customer.getName().toString()));
+
+        CommandResult result = editOrderCommand.execute(model);
+        assertEquals(new CommandResult(expectedMessage), result);
+    }
+
+    @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws CommandException {
         model.updateFilteredOrderList(order -> true);
         Index indexLastOrder = Index.fromOneBased(model.getFilteredOrderList().size());
