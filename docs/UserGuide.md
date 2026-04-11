@@ -251,6 +251,19 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
   * `t/` clears all existing tags.
 
+<box type="warning" seamless>
+
+**Important:** Updating a customer's address **does not** update the delivery address of their existing orders.
+
+When an order is created **without specifying a delivery address**, the order takes a *snapshot* of the customer’s address at that moment. This value is stored permanently in the order.
+
+- Editing the customer’s address later **will not** change created orders.
+- To update an order’s delivery address, use `edit-o ORDER_INDEX a/NEW_ADDRESS`.
+
+This behaviour ensures that historical orders remain accurate even if the customer moves or changes their address.
+
+</box>
+
 Examples:
 1. `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
 2. `edit 2 n/Betsy Crower t/` Edits the name of the 2nd customer to be `Betsy Crower` and clears all existing tags.
