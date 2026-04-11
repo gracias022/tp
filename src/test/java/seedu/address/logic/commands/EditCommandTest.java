@@ -273,7 +273,7 @@ public class EditCommandTest {
                 .filter(person -> !person.getId().equals(personToEdit.getId()))
                 .collect(Collectors.toList());
         String warning = DuplicateContactMatcher.findWarning(editedPerson, existingPersons)
-                .map(Messages::formatDuplicateContactWarning)
+                .map(fields -> Messages.formatDuplicateContactWarning(fields, editedPerson))
                 .orElse("");
         String expectedMessage = warning
                 + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));

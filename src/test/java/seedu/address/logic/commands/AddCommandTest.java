@@ -84,7 +84,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
         String warning = DuplicateContactMatcher.findWarning(validPerson, List.of(existingPerson))
-                .map(Messages::formatDuplicateContactWarning)
+                .map(fields -> Messages.formatDuplicateContactWarning(fields, validPerson))
                 .orElse("");
 
         assertEquals(warning + String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
