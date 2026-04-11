@@ -71,7 +71,6 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        logger.info("Checking for duplicate contact details for added customer: " + toAdd.getName());
         List<Person> existingPersons = model.getAddressBook().getPersonList();
         Optional<Set<String>> duplicateWarning = DuplicateContactMatcher.findWarning(toAdd, existingPersons);
         logger.info(duplicateWarning.map(fields -> "Duplicate contact details found for added customer: " + fields)

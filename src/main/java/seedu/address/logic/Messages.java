@@ -34,9 +34,8 @@ public class Messages {
                     + "(phone, Facebook, or Instagram).";
     public static final String MESSAGE_NO_SAVED_ADDRESS =
             "Customer has no saved address. Please specify delivery address with a/ or use a/PICKUP for pickup orders.";
-    public static final String MESSAGE_WARNING_DUPLICATE_CONTACT =
-            "WARNING: Duplicate contact details detected. This is allowed, but please verify.%n"
-                    + "Matched fields: %s%n%s%n%n";
+    public static final String MESSAGE_WARNING_DUPLICATE_CONTACT = "WARNING: Duplicate contact details detected. "
+            + "This is allowed, but please verify.%nMatched fields: %s%n%s%n%n";
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
@@ -73,7 +72,6 @@ public class Messages {
         assert person != null;
 
         final StringBuilder builder = new StringBuilder();
-
         builder.append(person.getName());
         appendContactInfo(builder, person);
         appendAddress(builder, person);
@@ -135,7 +133,6 @@ public class Messages {
         String nextStep = examples.isEmpty()
                 ? "Run find with the matching value(s) to review."
                 : "Try: " + String.join(" or ", examples);
-
         return String.format(MESSAGE_WARNING_DUPLICATE_CONTACT, fields, nextStep);
     }
 }
