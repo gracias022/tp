@@ -149,7 +149,11 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 * `FACEBOOK` must be 5 to 50 characters long and contain only letters, numbers, and periods. It must not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
 * `ADDRESS` can be any non-blank string, but cannot exceed 200 characters.
 * `REMARK` can be any non-blank string, but cannot exceed 500 characters.
-* `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens.
+* `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens. 
+  * A customer can have any number of tags (including 0).
+  * To specify multiple tags, repeat the `t/` prefix.  
+      For example: `t/friend t/vegan t/regular`.  
+      All tags provided will be added to the new customer.
 
 <box type="important" seamless>
 
@@ -176,7 +180,7 @@ ordering).
 
 <box type="tip" seamless>
 
-**Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g. "**John Doe (Clementi)**" and "**John Doe (Jurong)**"). A customer can also have any number of tags (including 0).
+**Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g. "**John Doe (Clementi)**" and "**John Doe (Jurong)**").
 
 </box>
 
