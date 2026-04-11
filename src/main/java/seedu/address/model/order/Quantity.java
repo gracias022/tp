@@ -13,11 +13,11 @@ public class Quantity {
 
     public static final String VALIDATION_REGEX = "[1-9][0-9]*";
 
+    private static final int THRESHOLD = 499;
+
     public final String value;
 
     public final Integer intValue;
-
-    private static final int THRESHOLD = 499;
 
     /**
      * Constructs a {@code Quantity}.
@@ -41,7 +41,7 @@ public class Quantity {
     /**
      * Returns true if the quantity exceeds the predefined threshold.
      */
-     public boolean isLarge() {
+    public boolean isLarge() {
         return this.intValue > THRESHOLD;
     }
 
