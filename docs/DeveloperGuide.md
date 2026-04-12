@@ -911,21 +911,21 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing a customer with an **updated field value**
 
-   1. Prerequisite: List all customers using the `list` command. At least one customer exists in the list.
+   1. Prerequisite: List all customers using the `list` command. Ensure that there is at least one customer in the list.
 
    2. Test case: `edit 1 p/91234567` <br>
       Expected: First displayed customer's phone number is updated to 91234567. Success message shown.
 
 2. Editing a customer by **clearing an optional field**
 
-   1. Prerequisite: First displayed customer has Instagram.
+   1. Prerequisite: First displayed customer has an Instagram handle.
 
    2. Test case: `edit 1 ig/`<br>
       Expected: First displayed customer's Instagram is cleared. Success message shown.
 
 3. Editing a customer by **clearing multiple optional fields but keeping one contact method**
 
-   1. Prerequisite: First displayed customer has at least one contact method.
+   1. Prerequisite: First displayed customer has phone and/or Facebook.
 
    2. Test case: `edit 1 p/ fb/ ig/test.ig`<br>
       Expected: First displayed customer's phone/Facebook are cleared, with Instagram set to "test.ig". Success message shown.
@@ -949,7 +949,7 @@ testers are expected to do more *exploratory* testing.
 
 7. Editing a customer with an **invalid index value** (index larger than the number of customers displayed)
 
-   1. Prerequisite: Less than 20 customers exist in the displayed customer list.
+   1. Prerequisite: Fewer than 20 customers are displayed in the customer list.
 
    2. Test case: `edit 20 p/91234567`<br>
       Expected: Command fails with an error message indicating that the supplied index is invalid. No changes applied.
@@ -961,7 +961,7 @@ testers are expected to do more *exploratory* testing.
 
 9. Editing a customer by providing a **duplicate name** (case-insensitive)
 
-   1. Prerequisite: An existing customer that is not being edited has the name "Bernice Yu".
+   1. Prerequisite: A different customer named "Bernice Yu" already exists.
 
    2. Test case: `edit 1 n/bernice yu`<br>
       Expected: Command fails with an error message indicating that a customer with the same name already exists. No changes applied.
