@@ -13,7 +13,7 @@ public class Address {
     public static final String MESSAGE_CONSTRAINTS =
             "Address must only contain alphanumeric characters, spaces and "
             + "the following special characters: ,.'/#&()-.\n"
-            + "Each section must start with alphanumeric characters, and must not exceed "
+            + "it must start with alphanumeric characters, and must not exceed "
             + MAX_ADDRESS_LENGTH + " characters total.";
 
     /*
