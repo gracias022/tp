@@ -679,7 +679,7 @@ The customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing 
 - Review the matched fields in the warning, then run the suggested `find` commands if you wish to see which customers share those contact methods.
   - The warning may suggest `find p/PHONE`, `find fb/FACEBOOK`, or `find ig/INSTAGRAM` based on the matches found. `PHONE`, `FACEBOOK` and `INSTAGRAM` take on the new customer’s values.
 - If the overlap is intentional (e.g. shared household/business contact), no action is needed.
-- If it is unintentional, run `edit` to correct the contact field(s). Please refer to the [Editing a customer](#edit) section for more details.
+- If it is unintentional, run `edit` to correct the contact field(s). Refer to [Editing a customer](#edit) for more details.
 
 </panel>
 
@@ -699,20 +699,15 @@ Include at least one of `p/`, `ig/`, or `fb/`.
 
 <panel header="Invalid field format" type="seamless">
 
-**Error shown (any one of these):**
-- "Name must be 1 to 100 characters, start with a letter or number, and contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)."
-- "Phone number must be 7 to 15 digits and contain only numbers (no spaces, '+' sign, or other symbols)."
-- "Instagram username must be 1 to 30 characters, start with a letter or number, and contain only letters, numbers, underscores, and periods..."
-- "Facebook username must be 5 to 50 characters, start with a letter or number, and contain only letters, numbers, and periods..."
-- "Address cannot be blank and must not exceed 200 characters."
-- "Remark cannot be blank and must not exceed 500 characters."
-- "Tag must contain at least one letter or number, and may include spaces, underscores, and hyphens."
+**Error shown:**
+A field-specific error message (e.g. “Customer name must…”, “Phone number must…”, etc.).
 
 **Why this happens:**
-The input for a specific field does not meet the required field constraints.
+Each field has its own format rules. If the value you entered breaks that field’s rules, a field‑specific error appears.
 
 **What to do:**
-Correct the specific field format and run the command again. Please refer to the [Adding a customer](#add) section for detailed field requirements.
+Identify the field that caused the error, correct its value, and try the command again. 
+Refer to [Adding a customer](#add) for the full list of field requirements.
 
 </panel>
 
@@ -726,7 +721,7 @@ The command is missing required prefixes or has the wrong structure.
 
 **What to do:**
 Ensure the `add` command includes `n/NAME` and at least one of `p/`, `ig/`, or `fb/`. 
-Please refer to the [Adding a customer](#add) section for the correct format.
+Refer to [Adding a customer](#add) for the correct format.
 
 </panel>
 
@@ -776,7 +771,7 @@ The index does not exist in the currently displayed customer list.
 - Ensure you provide:
   1. A positive integer index within the range of the currently displayed customer list; and
   2. At least one field to edit (e.g. `n/`, `a/`, `p/`, `fb/`, `ig/`, `r/`).
-- Please refer to the [Editing a customer](#edit) section for more details.
+- Refer to [Editing a customer](#edit) for more details.
 
 </panel>
 
