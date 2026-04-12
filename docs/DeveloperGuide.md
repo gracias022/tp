@@ -15,6 +15,8 @@
 
 This project is based on the AddressBook-Level3 (AB3) project created by the [SE-EDU initiative](https://se-education.org).
 
+This project made use of AI-assisted tools (GitHub Copilot / ChatGPT / Gemini) during development. The tools were used for code suggestions, auto-completion, documentation phrasing and feature design. All generated content was reviewed, tested, and modified by the team before inclusion.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -208,7 +210,7 @@ These fields (except the customer’s `UUID`) are implemented as domain classes,
 
 The find order(find-o) feature is facilitated by `OrderContainsKeywordsPredicate` and related classes.It allows users to search for orders based on different criteria (item, address, customer index, order status) with AND logic, meaning that only orders that match all specified criteria will be returned in the search results.
 
-The feature involves three main componenets:
+The feature involves three main components:
 
 * `FindOrderCommandParser` — Parses input arguments and builds a map of search criteria.
 * `FindOrderCommand` — Executes the search, resolves customer identifiers, and applies filtering.
@@ -251,7 +253,7 @@ Step 4. The UI displays the filtered results to the user. The `addressBookStateL
 
 </box>
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+The following sequence diagram shows how `FindOrderCommandParser` parses a find-o command:
 
 <puml src="diagrams/Find-oSequenceDiagram.puml" alt="FindOrderCommand Sequence Diagram" />
 
@@ -439,9 +441,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -480,24 +479,24 @@ _{more aspects and alternatives to be added}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                      | I want to …​                                                                                       | So that I can…​                                                                                                                          |
-|----------|------------------------------|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, Facebook, or Instagram)      | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
-| `* * *`  | User                         | Delete customer profiles                                                                           | Remove customers who no longer order from me and keep my customer database clean                                                         |
-| `* * *`  | Seller with many customers   | View a list of all my customers                                                                    | View my customer base at a glance                                                                                                        |
-| `* * *`  | User                         | Add new food orders for a specific customer (item, quantity, time, destination, status)            | Record new orders as they arrive from different message platforms                                                                        |
-| `* * *`  | User                         | Delete food orders by a specific customer                                                          | Keep my records updated when a customer cancels their order                                                                              |
-| `* * *`  | Conscientious seller         | View a specific customer's order history alongside their contact details                           | Quickly understand their past preferences and current pending requests before responding to their messages                               |
-| `* * *`  | Busy seller with many orders | View a list of all upcoming food orders across my entire customer base                             | Plan my order preparation schedule and ensure no orders are missed during peak periods                                                   |
-| `**`     | Seller with many customers   | Search for specific customers by name                                                              | Quickly retrieve customer details without scrolling through a long list                                                                  |
-| `**`     | Seller with many customers   | Search for customers by their phone number, Facebook username, or Instagram handle                 | Quickly identify a returning customer even if I only have their social media handle or phone number                                      |
-| `**`     | User                         | Edit customer details including their name, phone number, delivery address or social media handles | Update addresses or contact numbers when they change                                                                                     |
-| `**`     | User                         | Edit existing order details for any customer                                                       | Keep my records updated when a customer edits their request                                                                              |
-| `**`     | Conscientious seller         | Categorize customers by type (e.g., Corporate, Regular, New)                                       | Tailor my marketing efforts based on customer type to build long-term relationships                                                      |
-| `**`     | Conscientious seller         | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)                      | Deliver a more personalised service                                                                                                      |
-| `**`     | Conscientious seller         | Record the dietary restrictions of each customer (e.g., vegan, no peanuts)                         | Avoid preparing products that are potentially harmful for them                                                                           |
-| `*`      | User                         | Upload a profile picture for a customer contact                                                    | Visually verify a customer's identity during order handovers and reduce the risk of record-entry errors for customers with similar names |
-| `*`      | User                         | Store contact details of ingredient suppliers separately                                           | Maintain a clear separation between my customers and my ingredient providers                                                             |
+| Priority | As a …​                      | I want to …​                                                                                                 | So that I can…​                                                                                                                          |
+|----------|------------------------------|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, Facebook, Instagram)                   | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
+| `* * *`  | User                         | Delete customer profiles                                                                                     | Remove customers who no longer order from me and keep my customer database clean                                                         |
+| `* * *`  | Seller with many customers   | View a list of all my customers                                                                              | View my customer base at a glance                                                                                                        |
+| `* * *`  | User                         | Add new food orders for a specific customer (item, quantity, time, destination, status)                      | Record new orders as they arrive from different message platforms                                                                        |
+| `* * *`  | User                         | Delete food orders by a specific customer                                                                    | Keep my records updated when a customer cancels their order                                                                              |
+| `* * *`  | Conscientious seller         | View a specific customer's order history alongside their contact details                                     | Quickly understand their past preferences and current pending requests before responding to their messages                               |
+| `* * *`  | Busy seller with many orders | View a list of all upcoming food orders across my entire customer base                                       | Plan my order preparation schedule and ensure no orders are missed during peak periods                                                   |
+| `**`     | Seller with many customers   | Search for specific customers by name                                                                        | Quickly retrieve customer details without scrolling through a long list                                                                  |
+| `**`     | Seller with many customers   | Search for customers by their phone number, Facebook username, or Instagram handle                           | Quickly identify a returning customer even if I only have their social media handle or phone number                                      |
+| `**`     | User                         | Edit customer details including their name, phone number, delivery address or social media handles           | Update addresses or contact numbers when they change                                                                                     |
+| `**`     | User                         | Edit existing order details for any customer                                                                 | Keep my records updated when a customer edits their request                                                                              |
+| `**`     | Conscientious seller         | Categorize customers by type (e.g., Corporate, Regular, New)                                                 | Tailor my marketing efforts based on customer type to build long-term relationships                                                      |
+| `**`     | Conscientious seller         | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)                                | Deliver a more personalised service                                                                                                      |
+| `**`     | Conscientious seller         | Record the dietary restrictions of each customer (e.g., vegan, no peanuts)                                   | Avoid preparing products that are potentially harmful for them                                                                           |
+| `*`      | User                         | Upload a profile picture for a customer contact                                                              | Visually verify a customer's identity during order handovers and reduce the risk of record-entry errors for customers with similar names |
+| `*`      | User                         | Store contact details of ingredient suppliers separately                                                     | Maintain a clear separation between my customers and my ingredient providers                                                             |
 
 </div>
 
@@ -652,7 +651,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the `list` command.
+1. User enters the list customers command.
 
 2. BZNUS retrieves all customers.
 
@@ -678,7 +677,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the order command along with the order details.
+1. User enters the add order command along with the order details.
 
 2. BZNUS stores the new order.
 
@@ -741,7 +740,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the `list-o` command.
+1. User enters the list orders command.
 
 2. BZNUS retrieves all orders.
 
@@ -854,8 +853,6 @@ testers are expected to do more *exploratory* testing.
 
    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
 
 </div>
 
@@ -1144,18 +1141,6 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
-<div class="section-spacing">
-
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
-
-</div>
-
 ## **Appendix: Planned Enhancements**
 
 Team size: 5
@@ -1164,7 +1149,18 @@ Team size: 5
 
 2. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
 
-3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
+3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt, for example:
+   * “Delete order? (yes/no)” 
+   * “Delete customer? (yes/no)”
+   * “This customer has associated orders that will also be deleted. Delete customer? (yes/no)”<br><br>
+
+    The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
+
+4. **Allow edit and delete order commands to support bulk operations**: Currently, users can only modify or delete orders one at a time. We plan to enhance the two existing order commands to support deleting multiple orders or updating the status of multiple orders at once. For example:
+    * `delete-o 1, 3, 5` deletes the first, third, and fifth orders in the displayed list.
+    * `edit-o 2, 4 s/DELIVERED` updates the status of the second and fourth orders in the displayed list to 'DELIVERED'.<br><br>
+
+   This enhancement improves efficiency for users managing high order volumes.
 
 <div class="section-spacing">
 
