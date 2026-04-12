@@ -206,7 +206,7 @@ These fields (except the customer’s `UUID`) are implemented as domain classes,
 
 The find order(find-o) feature is facilitated by `OrderContainsKeywordsPredicate` and related classes.It allows users to search for orders based on different criteria (item, address, customer index, order status) with AND logic, meaning that only orders that match all specified criteria will be returned in the search results.
 
-The feature involves three main componenets:
+The feature involves three main components:
 
 * `FindOrderCommandParser` — Parses input arguments and builds a map of search criteria.
 * `FindOrderCommand` — Executes the search, resolves customer identifiers, and applies filtering.
@@ -249,7 +249,7 @@ Step 4. The UI displays the filtered results to the user. The `addressBookStateL
 
 </box>
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+The following sequence diagram shows how `FindOrderCommandParser` parses a find-o command:
 
 <puml src="diagrams/Find-oSequenceDiagram.puml" alt="FindOrderCommand Sequence Diagram" />
 
@@ -437,9 +437,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -480,7 +477,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                      | I want to …​                                                                                                 | So that I can…​                                                                                                                          |
 |----------|------------------------------|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, email, Facebook, Instagram or address) | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
+| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, Facebook, Instagram) | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
 | `* * *`  | User                         | Delete customer profiles                                                                                     | Remove customers who no longer order from me and keep my customer database clean                                                         |
 | `* * *`  | Seller with many customers   | View a list of all my customers                                                                              | View my customer base at a glance                                                                                                        |
 | `* * *`  | User                         | Add new food orders for a specific customer (item, quantity, time, destination, status)                      | Record new orders as they arrive from different message platforms                                                                        |
@@ -650,7 +647,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the `list` command.
+1. User enters the list customers command.
 
 2. BZNUS retrieves all customers.
 
@@ -739,7 +736,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the `list-o` command.
+1. User enters the list orders command.
 
 2. BZNUS retrieves all orders.
 
