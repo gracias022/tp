@@ -878,16 +878,12 @@ testers are expected to do more *exploratory* testing.
 
 3. Adding a customer with **no contact method provided**
 
-   1. Prerequisites: No existing customer named "John Tan".
-
-   2. Test case: `add n/John Tan `<br>
+   1. Test case: `add n/John Tan `<br>
       Expected: Command fails with an error message indicating that at least one contact method must be provided. No customer added. <br>
 
 4. Adding a customer with **invalid field format**
 
-   1. Prerequisite: No existing customer named "John Tan".
-
-   2. Test case: `add n/John Tan p/phone` <br>
+   1. Test case: `add n/John Tan p/phone` <br>
       Expected: Command fails with an error message indicating that the phone number must be 7–15 digits and contain only numbers. No customer added.
 
 5. Adding a customer **without a name**
@@ -1145,11 +1141,28 @@ testers are expected to do more *exploratory* testing.
 
 Team size: 5
 
-1. **Improve actionability of duplicate-contact warnings**: Currently, BZNUS displays a non-blocking warning when an added/edited customer shares contact details (phone, Facebook, or Instagram) with existing customer(s). In a future version, we plan to make this warning more actionable by summarising  the number of matching customers and showing the **top matches** (highest number of matched fields) in a **truncated list**. Each match can include the customer name, specific overlapping fields and an overlap score (e.g. number of matching contact fields). When multiple customers share the same overlap score, **name similarity** can be used as a tie‑breaker to prioritise the **most relevant matches**.
+1. **Improve actionability of duplicate-contact warnings**: Currently, BZNUS displays a non-blocking warning when an added/edited customer shares contact details (phone, Facebook, or Instagram) with existing customer(s). In a future version, we plan to make this warning more actionable by summarising the number of matching customers and showing the **top matches** (customers with the highest number of matched fields) in a **truncated list**. Each match can include the customer name and the specific overlapping fields. When multiple customers share the same overlap score, **name similarity** can be used as a tie‑breaker to prioritise the **most relevant matches**.
+    **Example of the improved warning message**:
+    ```
+    WARNING: Duplicate contact details detected. This is allowed, but please verify.
+    Matched fields: Facebook, Instagram
+    
+    Top matches (3/5):
+    1. Alex Yeoh — Facebook, Instagram
+    2. Bernice Yu — Instagram
+    3. Charlotte Oliveiro — Facebook
+    
+    Try:
+    find fb/alexyeoh
+    find ig/alexyeoh
+    
+    Edited Customer: Alex
+    ... (other details)
+    ```
     By providing users with more context upfront, this helps users quickly assess whether the new or edited entry is intentional, reducing unnecessary follow‑up `find` commands in cases where the warning already makes the situation clear.
 
 2. **Support Unicode characters in customer names (including duplicate detection and search)**:
-   The current customer name validation only accepts English alphanumeric characters and selected punctuation. This prevents users with **non‑English names** (e.g. Chinese, Tamil, Malay, or accented Latin names) from being added to the system, limiting the app’s usability in multilingual environments. A future version of BZNUS will expand the Name class to support Unicode characters. This enhancement also requires updating **name‑based duplicate detection, equality checks**, and **search behaviour** to correctly handle Unicode normalization (e.g. composed vs decomposed characters). These changes ensure consistent and correct behaviour once Unicode names are supported.
+   The current customer name validation only accepts English alphanumeric characters and selected punctuation. This prevents users with **non‑English names** (e.g. Chinese, Tamil, Malay, or accented Latin names) from being added to the system, limiting the app’s usability in multilingual environments. A future version of BZNUS will expand the Name class to support **Unicode characters**. This enhancement also requires updating **name‑based duplicate detection, equality checks**, and **search behaviour** to correctly handle Unicode normalization (e.g. composed vs decomposed characters). These changes ensure consistent and correct behaviour once Unicode names are supported.
 
 3. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
 
@@ -1165,6 +1178,8 @@ Team size: 5
     * `edit-o 2, 4 s/DELIVERED` updates the status of the second and fourth orders in the displayed list to 'DELIVERED'.<br><br>
 
    This enhancement improves efficiency for users managing high order volumes.
+
+5. **Unify post‑command list behaviour for `add`/`edit`/`order` commands**: Currently, after executing `add`, `edit`, or `order`, the app returns to the full customer/order list (filters reset), though the success message displays the added/edited entity’s details in full. In a future version, we plan to update the shared command execution pipeline so that the aforementioned commands refresh the UI to show **only the affected customer/order**. This improves visibility of the updated entry and keeps the behaviour consistent across all modification commands.
 
 <div class="section-spacing">
 
