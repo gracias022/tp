@@ -54,7 +54,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         return person.getName().fullName.toLowerCase().contains(lowerPhrase)
                 || person.getPhone().map(p -> p.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getFacebook().map(fb -> containsCleanPhrase(fb.value, searchPhrase)).orElse(false)
-                || person.getInstagram().map(ig -> containsCleanPhrase(ig.value, searchPhrase)).orElse(false)
+                || person.getInstagram().map(ig -> ig.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getAddress().map(a -> a.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getRemark().map(r -> r.value.toLowerCase().contains(lowerPhrase)).orElse(false)
                 || person.getTags().stream()
