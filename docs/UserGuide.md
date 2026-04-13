@@ -36,8 +36,8 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI like this should appear in a few seconds. Note how the app contains some sample data.<br>\
-   ![Ui](images/Ui.png)<br>
-On startup, the order list is automatically filtered to display only orders with the statuses `PREPARING` or `READY`.
+   ![Ui](images/Ui.png)<br>\
+On startup, the order list is automatically filtered to display only active orders (orders with the statuses `PREPARING` or `READY`) to reduce clutter.
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -314,8 +314,26 @@ Format: `delete INDEX`
 </box>
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd customer in the customer database.
-* `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
+1. `list` followed by `delete 2` deletes the 2nd customer in the customer database.
+2. `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
+
+<box type="info" seamless>
+
+**Expected output:**
+On success, you will see the following message:
+```
+Deleted Customer: NAME
+Phone: PHONE | Facebook: FACEBOOK | Instagram: INSTAGRAM
+Address: ADDRESS
+Remark: REMARK
+Tags: TAG1, TAG2, ...
+```
+Note that only the fields that exist for the deleted customer will be shown in the output.
+
+**Sample output:**
+![Sample output for Delete Customer](images/deleteCustomerSampleOutput.png)
+
+</box>
 
 ---
 
@@ -333,12 +351,19 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `ITEM_NAME` must **begin with a letter or a number**, contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and **cannot be blank**.
-* `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
+* `QUANTITY` **must be a positive integer without formatting characters** such as commas and spaces.\
+  If you enter an unusually large quantity (200 or more), the order will still be added, but a warning will be shown to help prevent accidental input errors.
 * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
 If the time entered is not in the future, the order will still be added (to support recording of completed orders), but a warning will be shown.
-* If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.\
-If the customer has no stored address, you will be prompted to enter a delivery address for the order.
+* If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used. Later changes to the customer’s address **will not** affect the delivery addresses of orders that have already been created.\
+If the customer has no stored address, the system displays an error message prompting you to enter a delivery address for the order.
 * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
+
+<box type="important" seamless>
+
+**Duplicate orders allowed:** You can add multiple orders with identical details, as customers may place the same order more than once. You may also wish to split a large batch order into multiple smaller orders for easier status tracking (since each order entry can only be assigned a single status).
+
+</box>
 
 <box type="tip" seamless>
 
@@ -347,9 +372,25 @@ If the customer has no stored address, you will be prompted to enter a delivery 
 </box>
 
 **Examples:**
-* `order 1 i/Pizza q/3 at/2026-06-02 1200`
-* `order 2 i/Burger q/5 at/2026-07-15 1800 a/123 Jurong West St 42, #05-01`
-* `order 3 i/Salad q/2 at/2026-08-10 1200 s/DELIVERED`
+1. `order 1 i/Pizza q/3 at/2026-06-02 1200`
+2. `order 2 i/Burger q/5 at/2026-07-15 1800 a/123 Jurong West St 42, #05-01`
+3. `order 3 i/Salad q/2 at/2026-08-10 1200 s/DELIVERED`
+
+<box type="info" seamless>
+
+**Expected output:**
+On success, if all fields are provided, you will see the following message:
+```
+New order added: ITEM (xQUANTITY) for CUSTOMER_NAME.
+Delivery to: ADDRESS
+At: DELIVERY_TIME | Status: STATUS
+```
+
+**Sample output for Example 1:**
+![Sample output for Add Order](images/addOrderSampleOutput.png)
+<br>
+
+</box>
 
 </div>
 
@@ -395,7 +436,7 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
 * The order **stays with the same customer**; you cannot reassign an order to another customer with this command.
 * Field rules are the same as when using **`order`** (see **Adding an order** above):
   * `ITEM_NAME` must **begin with a letter or a number**, contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and **cannot be blank**.
-  * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
+  * `QUANTITY` **must be a positive integer without formatting characters** such as commas and spaces.
   * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
     If you supply `at/` and the time is not in the future, a warning is shown (same behaviour as **`order`**), but the edit still applies—useful for recording completed orders.
   * If `DELIVERY_ADDRESS` is omitted in `edit-o`, the order **keeps its current delivery address**. (This differs from **`order`**, where omitting `a/` fills in the customer's stored address when present.)
@@ -448,8 +489,24 @@ Format: `delete-o ORDER_INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 **Examples:**
-* `list-o` followed by `delete-o 3` deletes the 3rd order in the results of the `list-o` command.
-* `find-o i/pizza` followed by `delete-o 1` deletes the 1st order in the results of the `find-o` command.
+1. `list-o` followed by `delete-o 3` deletes the 3rd order in the results of the `list-o` command.
+2. `find-o i/pizza` followed by `delete-o 1` deletes the 1st order in the results of the `find-o` command.
+
+<box type="info" seamless>
+
+**Expected output:**
+On success, you will see the following message:
+```
+Deleted order: ITEM (xQUANTITY) for CUSTOMER_NAME.
+Delivery to: ADDRESS
+At: DELIVERY_TIME | Status: STATUS
+```
+
+**Sample output:**
+![Sample output for Delete Order](images/deleteOrderSampleOutput.png)
+<br>
+
+</box>
 
 ---
 
@@ -550,10 +607,6 @@ To help you understand how BZNUS handles corrupted data files:
 
 </div>
 
-### <a id="archive-data"></a>Archiving Data Files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## <a id="faq"></a>FAQ
@@ -584,7 +637,7 @@ _Details coming soon ..._
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Customer**    | `add n/NAME [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 fb/james.Ho ig/james_Ho a/123, Clementi Rd, 1234665 r/extra spicy, no onion t/friend t/regular` |
 | **Edit Customer**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `edit 2 n/James Lee ig/jamesLee`                                                                                  |
-| **Find Customer**   | `find KEYWORD [MORE_KEYWORDS]` <br> e.g., `find James Jake` <br> Or `find PREFIX/KEYWORD` <br> e.g., `find fb/james` or `find ig/james_ho`                                                                                        |
+| **Find Customer**   | `find KEYWORD` <br> e.g., `find James Ho` <br> Or `find PREFIX/KEYWORD` <br> e.g., `find fb/james` or `find ig/james_ho`                                                                                                          |
 | **List Customers**  | `list`                                                                                                                                                                                                                            |
 | **Delete Customer** | `delete INDEX` <br> e.g., `delete 3`                                                                                                                                                                                              |
 

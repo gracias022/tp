@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Quantity {
     public static final String MESSAGE_CONSTRAINTS =
-            "Item quantity must be a positive whole number.";
+            "Item quantity must be a positive whole number without formatting characters.";
 
     public static final String VALIDATION_REGEX = "[1-9][0-9]*";
 
