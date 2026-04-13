@@ -151,6 +151,7 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 * `ADDRESS` can be any non-blank string, but cannot exceed 200 characters.
 * `REMARK` can be any non-blank string, but cannot exceed 500 characters.
 * `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens.
+* **Stray prefixes:** In `n/`, `p/`, `fb/`, `ig/`, and `t/`, an invalid prefix like `x/` is rejected. **`r/` and `a/`** skip this check so `/` in remarks and addresses stays literal.
 
 <box type="important" seamless>
 

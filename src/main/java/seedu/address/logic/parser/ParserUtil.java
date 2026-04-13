@@ -191,6 +191,7 @@ public class ParserUtil {
     public static Tag parseTag(String tag) throws ParseException {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
+        ensureNoUnsupportedPrefixTokensInValue(trimmedTag, PREFIXES_FOR_PERSON_COMMAND);
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
