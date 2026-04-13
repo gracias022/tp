@@ -888,14 +888,15 @@ testers are expected to do more *exploratory* testing.
 1. Initial launch
 
    1. Download the jar file and copy into an empty folder.
-
-   2. Double-click the jar file. Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   
+   2. Open a command terminal, `cd` into the folder you put the jar file in, and run `java -jar bznus.jar` to launch the application.<br>
+        Expected: GUI is shown with a set of sample customer and order data. The window size may not be optimum.
 
 2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   2. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by running `java -jar bznus.jar`.<br>
        Expected: The most recent window size and location is retained.
 
 </div>
@@ -915,12 +916,12 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: No existing customer named "Alice Tan".
 
-   2. Test case: `add n/Alice Tan p/98765432`<br>
+   2. Test case: `add n/Alice Tan p/98989898`<br>
       Expected: Customer named "Alice Tan" is added. Success message shown.
 
 3. Adding a customer with **no contact method provided**
 
-   1. Test case: `add n/John Tan `<br>
+   1. Test case: `add n/John Tan`<br>
       Expected: Command fails with an error message indicating that at least one contact method must be provided. No customer added. <br>
 
 4. Adding a customer with **invalid field format**
@@ -958,57 +959,50 @@ testers are expected to do more *exploratory* testing.
    2. Test case: `edit 1 p/91234567` <br>
       Expected: First displayed customer's phone number is updated to 91234567. Success message shown.
 
-2. Editing a customer by **clearing an optional field**
+2. Editing a customer by **clearing an optional field** but keeping at least one contact method
 
-   1. Prerequisite: First displayed customer has an Instagram handle.
+   1. Prerequisite: First displayed customer has an Instagram handle and at least one other contact method (`p/` or `fb/`).
 
    2. Test case: `edit 1 ig/`<br>
       Expected: First displayed customer's Instagram is cleared. Success message shown.
 
-3. Editing a customer by **clearing multiple optional fields but keeping one contact method**
+3. Editing a customer by **clearing all contact methods**
 
-   1. Prerequisite: First displayed customer has phone and/or Facebook.
-
-   2. Test case: `edit 1 p/ fb/ ig/test.ig`<br>
-      Expected: First displayed customer's phone/Facebook are cleared, with Instagram set to "test.ig". Success message shown.
-
-4. Editing a customer by **clearing all contact methods**
-
-   1. Prerequisite: First displayed customer has at least one contact method.
+   1. Prerequisite: There is at least one customer in the displayed customer list.
 
    2. Test case: `edit 1 p/ fb/ ig/`<br>
       Expected: Command fails with an error message indicating that at least one contact method must remain. No changes applied.
 
-5. Editing a customer **without providing any fields** to edit
+4. Editing a customer **without providing any fields to edit**
 
    1. Test case: `edit 1`<br>
       Expected: Command fails with an error message indicating that at least one field must be provided. No changes applied.
 
-6. Editing a customer with **invalid index format** (non-positive integer)
+5. Editing a customer with **invalid index format** (non-positive integer)
 
    1. Test case: `edit 0 p/91234567`<br>
       Expected: Command fails with an invalid command format error (index must be a positive integer). No changes applied.
 
-7. Editing a customer with an **invalid index value** (index larger than the number of customers displayed)
+6. Editing a customer with an **invalid index value** (index larger than the number of customers displayed)
 
    1. Prerequisite: Fewer than 20 customers are displayed in the customer list.
 
    2. Test case: `edit 20 p/91234567`<br>
       Expected: Command fails with an error message indicating that the supplied index is invalid. No changes applied.
 
-8. Editing a customer with **invalid field format**
+7. Editing a customer with **invalid field format**
 
    1. Test case: `edit 1 fb/.abc`<br>
       Expected: Command fails with an error message indicating the Facebook username requirements. No changes applied.
 
-9. Editing a customer by providing a **duplicate name** (case-insensitive)
+8. Editing a customer by providing a **duplicate name** (case-insensitive)
 
    1. Prerequisite: A different customer named "Bernice Yu" already exists.
 
    2. Test case: `edit 1 n/bernice yu`<br>
       Expected: Command fails with an error message indicating that a customer with the same name already exists. No changes applied.
 
-10. Optional persistence check
+9. Optional persistence check
 
     1. After any successful edit, close and relaunch the app.<br>
        Expected: Edited customer details remain.
