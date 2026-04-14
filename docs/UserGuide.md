@@ -112,7 +112,11 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 * `FACEBOOK` must be 5 to 50 characters long and contain only letters, numbers, and periods. It must not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
 * `ADDRESS` must only contain alphanumeric characters, spaces, and the following special characters: ,.'/#&()-. It must start with an alphanumeric character, and cannot exceed 200 characters.
 * `REMARK` can be any non-blank string, but cannot exceed 500 characters.
-* `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens.
+* `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens. 
+  * A customer can have any number of tags (including 0).
+  * To specify multiple tags, repeat the `t/` prefix.  
+      For example: `t/friend t/vegan t/regular`.  
+      All tags provided will be added to the new customer.
 * **Stray prefixes:** In `n/`, `p/`, `fb/`, `ig/`, and `t/`, an invalid prefix like `x/` is rejected. **`r/` and `a/`** skip this check so `/` in remarks and addresses stays literal.
 
 <box type="important" seamless>
@@ -127,9 +131,19 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 
 </box>
 
+<box type="info" seamless>
+
+**Note**: BZNUS allows multiple customers to share the **same phone number,
+Instagram handle, or Facebook username**. This is **intentional**, as shared
+contact methods are common in real-world scenarios (e.g. corporate accounts, household landlines, or shared business social media).
+
+However, if you add a customer with contact details that overlap with an existing customer, BZNUS will show a **non-blocking warning** in the result message. You can review the warning and use `find` to check for potential duplicates.
+
+</box>
+
 <box type="tip" seamless>
 
-**Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g. "**John Doe (Clementi)**" and "**John Doe (Jurong)**"). A customer can also have any number of tags (including 0).
+**Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g. "**John Doe (Clementi)**" and "**John Doe (Jurong)**").
 
 </box>
 
@@ -154,6 +168,13 @@ Note that only the fields provided in the command will be shown in the output. F
 **Sample output for Example 1:**
 ![Sample output for adding a customer](images/addCustomerSampleOutput.png)
 <br>
+
+**Sample output (top of message): non-blocking duplicate contact warning:**<br>
+Duplicate fields detected: `INSTAGRAM: alex.yeoh`, `FACEBOOK: Alex.Yeoh`
+![Sample non-blocking duplicate contact warning](images/addCustomerDuplicateWarningSampleOutput.png)
+
+Note: The command still succeeds; the added customer's details appear after the warning in the same result box.
+
 If the customer name is a duplicate or invalid input is provided, an error message will be shown. Please refer to the [Troubleshooting](#troubleshooting) section for more details.
 
 </box>
@@ -215,6 +236,19 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
 * Tags are handled as a set:
   * `t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
   * `t/` clears all existing tags.
+
+<box type="warning" seamless>
+
+**Important:** Updating a customer's address **does not** update the delivery address of their existing orders.
+
+When an order is created **without specifying a delivery address**, the order takes a *snapshot* of the customer’s address at that moment. This address does **not stay linked** to the customer.
+
+- Editing the customer’s address later **will not** change created orders.
+- To update an order’s delivery address, use `edit-o ORDER_INDEX a/NEW_ADDRESS`.
+
+This behaviour ensures that historical orders remain accurate even if the customer moves or changes their address.
+
+</box>
 
 Examples:
 1. `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
@@ -596,30 +630,24 @@ Certain edits (e.g. entering out-of-range values) can cause BZNUS to behave in u
 
 <box type="warning" seamless>
 
-**Disclaimer:** If you remove **all contact methods** from a customer in the file (e.g. delete phone, Facebook, and Instagram), the app **will not detect this error** when reopened. The customer will be loaded with no contact methods. It is your responsibility to ensure each customer in the data file has at least one contact method.
-
-</box>
-
-<box type="warning" seamless>
-
-**Caution:**
-If your changes to the data file makes its format invalid, BZNUS will start with empty customer and order lists at the next run. Hence, it is recommended to make a backup of the file before editing it.
+**Caution: Corrupted Data File**
+If your changes to the data file make its format invalid or violate app rules (e.g. a customer ends up with no contact methods), your data may not load correctly. It is recommended to make a backup of the file before editing it.
 
 **Save behavior:**
-To help you understand how BZNUS handles corrupted data files:
+To help you understand how BZNUS handles a corrupted `addressbook.json`:
 
-- If `addressbook.json` is corrupted, BZNUS loads empty customer and orders lists on app startup but **does not overwrite the corrupted file** unless you explicitly save the current session.
+- If the data file is corrupted, BZNUS starts with empty customer and order lists, but it **does not overwrite the corrupted file** unless you execute a command that saves data.
 - **Commands that save data:**
-  - Any data‑modifying command (e.g. `add`, `clear`, `exit`) will save the current in-memory data and **overwrite** the corrupted file.
+  - Any command that modifies the data (e.g. `add`, `edit`, `delete`, `clear`, `exit`) will save the current app state and **overwrite** the corrupted file.
 - **Actions that do _not_ save data:**
-  - Closing the window using the **X** button or pressing **`Ctrl+C`  in the terminal where BZNUS is running** does **not** save in-memory changes. The corrupted file remains unchanged, and BZNUS will load empty lists again on the next startup.
+  - Closing the window using the **`X`** button or pressing **`Ctrl+C`** in the terminal where BZNUS is running does **not** write anything to the data file. The corrupted file remains unchanged, so BZNUS will load empty lists again on the next startup as long as the file is still invalid.
 
 </box>
 
 <box type="tip" seamless>
 
 **Tip:** To fix corrupted data without losing everything you've stored:
-1. Close BZNUS first by clicking the **X** button.
+1. Close BZNUS first by clicking the **`X`** button.
 2. Edit `addressbook.json` manually.
 3. Reopen BZNUS.
 
@@ -704,11 +732,13 @@ Customer names are unique (case-insensitive). Extra spaces in names are cleaned 
 Use a different name that is not already in the customer database
 (e.g. include a descriptor such as `John Doe (Jurong)`).
 
-Bonus: Use **tags** or **remarks** to further differentiate customers with similar names.
+Tip: Use **tags** or **remarks** to further differentiate customers with similar names.
 
 </panel>
 
-<panel header="Duplicate contact details warning (non-blocking)" type="seamless">
+<a id="duplicate-contact-warning-troubleshooting"></a>
+
+<panel id="duplicate-contact-warning" header="Duplicate contact details warning (non-blocking)" type="seamless">
 
 **Warning shown:**
 "WARNING: Duplicate contact details detected. This is allowed, but please verify..."
@@ -717,10 +747,12 @@ Bonus: Use **tags** or **remarks** to further differentiate customers with simil
 The customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer.
 
 **What to do:**
-- Review the matched fields in the warning, then run the suggested `find` commands if you wish to see which customers share those contact methods.
+- Review the matched fields in the warning.
+- (Optional) Run the suggested `find` commands to review overlaps:
   - The warning may suggest `find p/PHONE`, `find fb/FACEBOOK`, or `find ig/INSTAGRAM` based on the matches found. `PHONE`, `FACEBOOK` and `INSTAGRAM` take on the new customer’s values.
+  - Tip: You can also combine prefixes (e.g. `find p/PHONE ig/INSTAGRAM`) to check whether any customer matches multiple contact fields, which may indicate a likely duplicate.
 - If the overlap is intentional (e.g. shared household/business contact), no action is needed.
-- If it is unintentional, run `edit` to correct the contact field(s). Refer to [Editing a customer](#edit) for more details.
+- If it is unintentional, run `edit` to correct the contact field(s) of the added customer. Refer to [Editing a customer](#edit) for more details.
 
 </panel>
 
@@ -737,6 +769,8 @@ At least one contact method is required.
 Include at least one of `p/`, `ig/`, or `fb/`.
 
 </panel>
+
+<a id="invalid-field-format-troubleshooting"></a>
 
 <panel header="Invalid field format" type="seamless">
 
@@ -766,6 +800,26 @@ Refer to [Adding a customer](#add) for the correct format.
 
 </panel>
 
+<a id="invalid-prefix-troubleshooting"></a>
+
+<panel header="Unsupported/invalid prefix" type="seamless">
+
+**Error shown (Example):**
+"Unsupported prefix 'X/' in this command. Valid prefixes: n/, p/, fb/, ig/, a/, r/, t/."
+
+**Why this happens:**  
+A prefix not recognised by the command was used.
+
+**What to do:**
+* Remove or correct the unknown prefix. Use only the supported prefixes shown in the error message. 
+* Refer to [Adding a customer](#add) or [Editing a customer](#edit) for the accepted command formats.
+* If you intended to type a literal `/`, note that:
+  * `/` is **not allowed** in phone, Facebook, Instagram, or tags. 
+  * For names, escape it as `\/` (e.g. `n/John \/ Doe` → “John / Doe”). 
+  * For address and remark, `/` can be typed normally.
+
+</panel>
+
 <panel header="Duplicate single-valued prefixes" type="seamless">
 
 **Error shown (example):**
@@ -792,9 +846,15 @@ Keep to only one value for each single-valued prefix specified (`n/`, `p/`, `fb/
 The index does not exist in the currently displayed customer list.
 
 **What to do:**
-1. Run `list`
-2. (Optional): Use `find KEYWORD` or `find PREFIX/KEYWORD` to narrow down the list if needed.
-3. Retry the `edit` command with an index **within the displayed range** (e.g. `edit 1 ...` to edit the first customer in the currently displayed list).
+1. Check that the customer you wish to edit is visible in the currently displayed list.
+2. If needed, run `list` to show all customers again, or use `find KEYWORD` / `find PREFIX/KEYWORD` to narrow down the list.
+3. Retry `edit` using an index that appears in that displayed list (e.g. `edit 1 ...` to edit the first customer shown).
+
+</panel>
+
+<panel header="Invalid field format" type="seamless">
+
+Refer to [Invalid field format for `add`](#invalid-field-format-troubleshooting) for details.
 
 </panel>
 
@@ -813,6 +873,12 @@ The index does not exist in the currently displayed customer list.
   1. A positive integer index within the range of the currently displayed customer list; and
   2. At least one field to edit (e.g. `n/`, `a/`, `p/`, `fb/`, `ig/`, `r/`).
 - Refer to [Editing a customer](#edit) for more details.
+
+</panel>
+
+<panel header="Unsupported/invalid prefix" type="seamless">
+
+Refer to [Unsupported/invalid prefix for `add`](#invalid-prefix-troubleshooting) for details.
 
 </panel>
 
@@ -840,6 +906,12 @@ Customer names are unique (case‑insensitive). Extra spaces in names are cleane
 **What to do:**
 Use a different name that is not already in the customer database
 (e.g. include a descriptor such as `John Doe (Jurong)`).
+
+</panel>
+
+<panel header="Duplicate contact details warning after editing" type="seamless">
+
+Refer to [Duplicate contact details warning (non-blocking) for `add`](#duplicate-contact-warning-troubleshooting) for details.
 
 </panel>
 
